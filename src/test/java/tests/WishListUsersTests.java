@@ -26,11 +26,11 @@ public class WishListUsersTests {
     private User user;
 
     @Test
-    @Tag("users3")
+    @Tag("users")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
-        String titleUsers = "Пользователи";
+        String titleUsers = "Пользо ватели";
         String titleWishListUsers = "Списки желаний пользователя";
 
         wishListUsersPage.open();

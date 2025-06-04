@@ -12,20 +12,4 @@ public class User {
     private final String email = faker.internet().emailAddress();
     @Getter
     private final String password = faker.internet().password();
-
-    public Faker getFaker() {
-        return faker;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

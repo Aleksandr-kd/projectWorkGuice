@@ -2,12 +2,13 @@ package ru.arutyunyan.pages.otus;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.pages.AbsBasePage;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Path("/register")
@@ -96,4 +97,23 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         waiters.waitForPageLoad();
         return this;
     }
+
+    @Step("Проверка открытия нужной страницы")
+    public ClientOtusPage pageTitleShouldBeSames(String title) {
+        assertThat(getPageTextRegistration()).isEqualTo(title);
+        return this;
+    }
+
+    @Step("Проверка открытия страницы зарегистрированного пользователя")
+    public ClientOtusPage pageTitleRegistrationShouldBeSames(String title) {
+        assertThat(getTextLogin()).isEqualTo(title);
+        return this;
+    }
+
+    @Step("Проверка авторизации пользователя")
+    public void checkAuthorization(String title) {
+        assertThat(getTextAccount()).isEqualTo(title);
+    }
+
+
 }

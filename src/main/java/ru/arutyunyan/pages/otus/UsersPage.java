@@ -1,17 +1,18 @@
 package ru.arutyunyan.pages.otus;
 
 import io.qameta.allure.Step;
-import ru.arutyunyan.annotations.Path;
-import ru.arutyunyan.dto.WishList;
-import ru.arutyunyan.pages.AbsBasePage;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import ru.arutyunyan.annotations.Path;
+import ru.arutyunyan.dto.WishList;
+import ru.arutyunyan.pages.AbsBasePage;
 
 import java.time.Duration;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Path("/register")
@@ -50,8 +51,8 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     private WebElement buttonViewWishList;
 
 
-    @FindBy(xpath = "//button[text()='Добавить подарок']")
-    private WebElement buttonAddPresent;
+//    @FindBy(xpath = "//button[text()='Добавить подарок']")
+//    private WebElement buttonAddPresent;
 
     @FindBy(xpath = "//button[text()='Удалить список']")
     private WebElement buttonDeletePresent;
@@ -65,14 +66,14 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @FindBy(xpath = "//label[text()='Ссылка на магазин (необязательно)']/following-sibling::input")
     private WebElement linkStorePresent;
 
-    @FindBy(xpath = "//label[text()='Цена (необязательно)']/following-sibling::input")
-    private WebElement pricePresent;
+//    @FindBy(xpath = "//label[text()='Цена (необязательно)']/following-sibling::input")
+//    private WebElement pricePresent;
 
-    @FindBy(xpath = "//label[text()='Ссылка на изображение (необязательно)']/following-sibling::input")
-    private WebElement linkImagePresent;
+//    @FindBy(xpath = "//label[text()='Ссылка на изображение (необязательно)']/following-sibling::input")
+//    private WebElement linkImagePresent;
 
-    @FindBy(xpath = "//button[text()='Добавить']")
-    private WebElement buttonAddForm;
+//    @FindBy(xpath = "//button[text()='Добавить']")
+//    private WebElement buttonAddForm;
 
     @FindBy(xpath = "//div[@class='mt-5 container']//h2")
     private WebElement nameWishList;
@@ -85,11 +86,11 @@ public class UsersPage extends AbsBasePage<UsersPage> {
             "//p[@class='card-text']")
     private WebElement lastDescriptionPresent;
 
-    @FindBy(xpath = "//input[@type='email']")
-    private WebElement inputEmail;
-
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement buttonRegistration;
+//    @FindBy(xpath = "//input[@type='email']")
+//    private WebElement inputEmail;
+//
+//    @FindBy(xpath = "//button[@type='submit']")
+//    private WebElement buttonRegistration;
 
     @Step("Получение описание последнего желания")
     public String getPageTextDescriptionPresent() {
@@ -97,13 +98,15 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     }
 
     @Step("Нажать кнопку Создать новый список")
-    public void clickCreateNewWishList() {
+    public UsersPage clickCreateNewWishList() {
         waiters.waitAndClick(buttonCreateNewWishList);
+        return this;
     }
 
     @Step("Нажать кнопку Создать")
-    public void clickButtonCreate() {
+    public UsersPage clickButtonCreate() {
         buttonCreateWishList.click();
+        return this;
     }
 
     @Step("Заполнить название")
@@ -119,9 +122,10 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     }
 
     @Step("Заполнить форму создания нового списка желаний")
-    public void formCreateNewWishList(WishList wishList) {
+    public UsersPage formCreateNewWishList(WishList wishList) {
         setNameNewWishList(wishList);
         setDescriptionNewWishList(wishList);
+        return this;
     }
 
     @Step("Удаление желания")
@@ -150,11 +154,11 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return nameWishList.getText();
     }
 
-    @Step("Удаление списка")
-    public boolean isDeleteWishList() {
-        buttonDeletePresent.click();
-        return true;
-    }
+//    @Step("Удаление списка")
+//    public boolean isDeleteWishList() {
+//        buttonDeletePresent.click();
+//        return true;
+//    }
 
     @Step("Удаление всех элементов списка")
     public void deleteAllWishLists() {
@@ -188,4 +192,31 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         }
         return isPresent;
     }
+
+    @Step("Проверка добавление желания по названию")
+    public UsersPage checkAddNameWishList(WishList wishList) {
+        assertThat(getPageTextNameRegistrationPresent())
+                .as("Элемент с названием %s не найден", wishList.getProductName())
+                .isEqualTo(wishList.getProductName());
+        return this;
+    }
+
+    @Step("Проверка добавление желания по описанию")
+    public UsersPage checkAddDescriptionWishLis(WishList wishList) {
+        assertThat(wishList.getDescription())
+                .as("Элемент с описанием %s не найден", getPageTextDescriptionPresent())
+                .isEqualTo(getPageTextDescriptionPresent());
+        return this;
+    }
+
+    @Step("Проверка удаления желания")
+    public boolean isCheckDeleteWishList() {
+        assertThat(isDeletePresent()).as("Проверка удаления элемента").isTrue();
+        return false;
+    }
+
+
+
+
+
 }
