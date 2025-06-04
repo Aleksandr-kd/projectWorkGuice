@@ -32,7 +32,8 @@ public class UsersTests {
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
-        usersPage.open();
+        usersPage
+                .open();
 
         clientOtusPage
                 .registration(user)
@@ -53,7 +54,8 @@ public class UsersTests {
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
 
-        usersPage.open();
+        usersPage
+                .open();
 
         clientOtusPage
                 .registration(user)
