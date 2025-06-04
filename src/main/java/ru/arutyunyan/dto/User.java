@@ -1,5 +1,6 @@
 package ru.arutyunyan.dto;
 import com.github.javafaker.Faker;
+import lombok.Getter;
 
 
 public class User {

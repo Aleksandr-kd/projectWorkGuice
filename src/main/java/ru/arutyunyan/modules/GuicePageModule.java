@@ -11,7 +11,7 @@ import ru.arutyunyan.pages.otus.WishListUsersPage;
 
 public class GuicePageModule extends AbstractModule {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public GuicePageModule(WebDriver driver) {
         this.driver= driver;

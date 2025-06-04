@@ -1,5 +1,9 @@
 package ru.arutyunyan.data;
 
+import lombok.Getter;
+
+
+@Getter
 public enum BrowserModeData {
     KIOSK("kiosk"),
     FULLSCREEN("fullscreen"),
@@ -9,9 +13,5 @@ public enum BrowserModeData {
 
     BrowserModeData(String name){
         this.name=name;
-    }
-
-    public String getName(){
-        return name;
     }
 }

@@ -30,7 +30,6 @@ public abstract class AbsBasePage<T> extends AbsCommon {
     @Step("Открытие страницы")
     public T open() {
         driver.get(baseUrl + getPath());
-
         return (T) this;
     }
 }

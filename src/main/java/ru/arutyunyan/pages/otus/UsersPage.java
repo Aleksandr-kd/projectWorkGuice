@@ -22,15 +22,6 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         super(driver);
     }
 
-//    @FindBy(xpath = "//button[text()='Войти']")
-//    private WebElement buttonLogin;
-//
-//    @FindBy(xpath = "//input[@type='text']")
-//    private WebElement inputName;
-//
-//    @FindBy(xpath = "//input[@type='password']")
-//    private WebElement inputPassword;
-
     @FindBy(xpath = "//button[text()='Создать новый список']")
     private WebElement buttonCreateNewWishList;
 
@@ -43,37 +34,14 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @FindBy(xpath = "//button[text()='Удалить']")
     public List<WebElement> buttonDeleteWishList;
 
-//    @FindBy(xpath = "(//div[@class='col'])[last()]")
-//    private WebElement lastCard;
-
-
     @FindBy(xpath = "(//button[@class='btn btn-primary'])[last()]")
     private WebElement buttonViewWishList;
-
-
-//    @FindBy(xpath = "//button[text()='Добавить подарок']")
-//    private WebElement buttonAddPresent;
-
-    @FindBy(xpath = "//button[text()='Удалить список']")
-    private WebElement buttonDeletePresent;
 
     @FindBy(xpath = "//label[text()='Название']/following-sibling::input")
     private WebElement namePresent;
 
     @FindBy(xpath = "//label[text()='Описание (необязательно)']/following-sibling::textarea")
     private WebElement descriptionPresent;
-
-    @FindBy(xpath = "//label[text()='Ссылка на магазин (необязательно)']/following-sibling::input")
-    private WebElement linkStorePresent;
-
-//    @FindBy(xpath = "//label[text()='Цена (необязательно)']/following-sibling::input")
-//    private WebElement pricePresent;
-
-//    @FindBy(xpath = "//label[text()='Ссылка на изображение (необязательно)']/following-sibling::input")
-//    private WebElement linkImagePresent;
-
-//    @FindBy(xpath = "//button[text()='Добавить']")
-//    private WebElement buttonAddForm;
 
     @FindBy(xpath = "//div[@class='mt-5 container']//h2")
     private WebElement nameWishList;
@@ -85,12 +53,6 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @FindBy(xpath = "//div[@class='g-4 row row-cols-lg-3 row-cols-md-2 row-cols-1']/*[last()]" +
             "//p[@class='card-text']")
     private WebElement lastDescriptionPresent;
-
-//    @FindBy(xpath = "//input[@type='email']")
-//    private WebElement inputEmail;
-//
-//    @FindBy(xpath = "//button[@type='submit']")
-//    private WebElement buttonRegistration;
 
     @Step("Получение описание последнего желания")
     public String getPageTextDescriptionPresent() {
@@ -141,10 +103,11 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return lastNamePresent.getText();
     }
 
-    @Step("Скролл и клик по элементу: {element}")
-    public void viewWishList() {
+    @Step("Скрол и клик по элементу: {element}")
+    public UsersPage viewWishList() {
         actions.sendEnd(2000, 1000);
         buttonViewWishList.click();
+        return this;
     }
 
     @Step("Получение названия последнего желания")
@@ -154,14 +117,8 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return nameWishList.getText();
     }
 
-//    @Step("Удаление списка")
-//    public boolean isDeleteWishList() {
-//        buttonDeletePresent.click();
-//        return true;
-//    }
-
     @Step("Удаление всех элементов списка")
-    public void deleteAllWishLists() {
+    public UsersPage deleteAllWishLists() {
         actions.pause(2000);
         List<WebElement> deleteButtons = buttonDeleteWishList;
 
@@ -180,6 +137,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
                 throw new RuntimeException("Элемент не был удален в течение 5 секунд");
             }
         }
+        return this;
     }
 
     @Step("Проверка кнопки удаления на отображение")
@@ -210,13 +168,22 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     }
 
     @Step("Проверка удаления желания")
-    public boolean isCheckDeleteWishList() {
+    public void isCheckDeleteWishList() {
         assertThat(isDeletePresent()).as("Проверка удаления элемента").isTrue();
-        return false;
     }
 
+    @Step("Проверка наличие кнопки удаления на подарке")
+    public UsersPage checkButtonDeleteWishList() {
+        assertThat(verifyDeleteButtonNotPresent())
+                .withFailMessage("Не все подарки удалились")
+                .isFalse();
+        return this;
+    }
 
-
-
-
+    @Step("Проверка наличие подарка по названию")
+    public void checkForNameWishList(WishList wishList) {
+        assertThat(getNameWishList())
+                .as("Элемент с названием %s не найден", wishList.getProductName())
+                .isEqualTo(wishList.getProductName());
+    }
 }

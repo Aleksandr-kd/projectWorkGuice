@@ -1,6 +1,5 @@
 package ru.arutyunyan.common;
 
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +7,7 @@ import ru.arutyunyan.utils.Waiters;
 import ru.arutyunyan.utils.Actions;
 
 import java.util.List;
+
 
 public class AbsCommon {
 
