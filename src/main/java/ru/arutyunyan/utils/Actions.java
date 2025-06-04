@@ -24,7 +24,5 @@ public class Actions {
                 .sendKeys(Keys.END)
                 .pause(millisEnd)
                 .perform();
-
     }
-
 }

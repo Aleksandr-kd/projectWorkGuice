@@ -41,7 +41,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @FindBy(xpath = "//h2[text()='Мои списки желаний']")
     private WebElement listWishList;
 
-
     @Step("Получение текста авторизации")
     public String getTextAccount() {
         return waiters.waitAndGetText(listWishList);
@@ -85,7 +84,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
-        actions.pause(1000);
+        actions.pause(2000);
 
         inputName.clear();
         inputName.sendKeys(user.getName());
@@ -114,6 +113,4 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     public void checkAuthorization(String title) {
         assertThat(getTextAccount()).isEqualTo(title);
     }
-
-
 }

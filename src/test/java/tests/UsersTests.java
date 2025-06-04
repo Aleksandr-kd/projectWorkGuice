@@ -11,13 +11,12 @@ import ru.arutyunyan.extension.TestSetupExtension;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 import ru.arutyunyan.pages.otus.UsersPage;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestSetupExtension.class)
 public class UsersTests {
 
     @Inject
-    ClientOtusPage clientOtusPage;
+    private ClientOtusPage clientOtusPage;
 
     @Inject
     private UsersPage usersPage;
@@ -26,10 +25,10 @@ public class UsersTests {
     private User user;
 
     @Inject
-    WishList wishList;
+    private WishList wishList;
 
     @Test
-    @Tag("usersq")
+    @Tag("users")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
@@ -54,33 +53,19 @@ public class UsersTests {
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
 
-        String nameProduct = wishList.getProductName();
-        String description = wishList.getDescription();
-
         usersPage.open();
-        clientOtusPage.registration(user);
-        clientOtusPage.authorization(user);
-        usersPage.deleteAllWishLists();
 
-        assertThat(usersPage.verifyDeleteButtonNotPresent())
-                .withFailMessage("Не все подарки удалились")
-                .isFalse();
+        clientOtusPage
+                .registration(user)
+                .authorization(user);
 
-        usersPage.clickCreateNewWishList();
-        usersPage.formCreateNewWishList(wishList);
-        usersPage.clickButtonCreate();
-        usersPage.viewWishList();
-
-        String nameCheck = usersPage.getNameWishList();
-        assertThat(nameCheck)
-                .as("Элемент с названием %s не найден", nameProduct)
-                .isEqualTo(nameProduct);
-
-
-        usersPage.isDeleteWishList();
-
-        Boolean isDeletePresent = usersPage.isDeleteWishList();
-        assertThat(isDeletePresent).as("Проверка удаления элемента").isTrue();
-
+        usersPage
+                .deleteAllWishLists()
+                .checkButtonDeleteWishList()
+                .clickCreateNewWishList()
+                .formCreateNewWishList(wishList)
+                .clickButtonCreate()
+                .viewWishList()
+                .checkForNameWishList(wishList);
     }
 }

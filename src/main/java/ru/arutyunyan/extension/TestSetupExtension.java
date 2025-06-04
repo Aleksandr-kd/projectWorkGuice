@@ -21,7 +21,7 @@ public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback
 
     private WebDriver driver;
 
-    private ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(TestSetupExtension.class);
+    private final ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(TestSetupExtension.class);
 
     @Override
     public void beforeEach(ExtensionContext context) {

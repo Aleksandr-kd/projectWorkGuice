@@ -1,23 +1,20 @@
 package tests;
 
 import jakarta.inject.Inject;
-import org.junit.jupiter.api.extension.ExtendWith;
-import ru.arutyunyan.dto.User;
-import ru.arutyunyan.pages.otus.ClientOtusPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import ru.arutyunyan.dto.User;
 import ru.arutyunyan.extension.TestSetupExtension;
+import ru.arutyunyan.pages.otus.ClientOtusPage;
 import ru.arutyunyan.pages.otus.WishListUsersPage;
-
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestSetupExtension.class)
 public class WishListUsersTests {
 
     @Inject
-    ClientOtusPage clientOtusPage;
+    private ClientOtusPage clientOtusPage;
 
     @Inject
     private WishListUsersPage wishListUsersPage;
@@ -30,27 +27,21 @@ public class WishListUsersTests {
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
-        String titleUsers = "Пользо ватели";
-        String titleWishListUsers = "Списки желаний пользователя";
+        wishListUsersPage
+                .open();
 
-        wishListUsersPage.open();
-        clientOtusPage.registration(user);
-        clientOtusPage.authorization(user);
-        wishListUsersPage.openUsers();
+        clientOtusPage
+                .registration(user)
+                .authorization(user);
 
-        String textUsers = wishListUsersPage.getPageTextUsers();
-        assertThat(textUsers).isEqualTo(titleUsers);
-
-        wishListUsersPage.viewWistListOne();
-
-        String getTextPageTextWishListUsersOne = wishListUsersPage.getTextPageTextWishListUsers();
-        assertThat(getTextPageTextWishListUsersOne).isEqualTo(titleWishListUsers);
-        wishListUsersPage.backList();
-
-        wishListUsersPage.viewWistListLast();
-        String getTextPageTextWishListUsersLast = wishListUsersPage.getTextPageTextWishListUsers();
-        assertThat(getTextPageTextWishListUsersLast).isEqualTo(titleWishListUsers);
-
-        wishListUsersPage.backList();
+        wishListUsersPage
+                .openUsers()
+                .pageTitleShouldBeSames("Пользователи")
+                .viewWistListOne()
+                .pageTitleListShouldBeSames("Списки желаний пользователя")
+                .backListUsers()
+                .viewWistListLast()
+                .pageNameShouldBeSames("Списки желаний пользователя")
+                .backListUsers();
     }
 }
