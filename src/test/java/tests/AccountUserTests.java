@@ -26,11 +26,11 @@ public class AccountUserTests {
 
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSames("Регистрация")
+                .pageTitleShouldBeSame("Регистрация")
                 .registration(user)
-                .pageTitleRegistrationShouldBeSames("Вход в систему")
+                .pageTitleRegistrationShouldBeSame("Вход в сис тему")
                 .authorization(user)
-                .checkAuthorization("Мои списки желаний");
+                .pageTitleAuthorizationShouldBeSame("Мои спис ки желаний");
     }
 }
 

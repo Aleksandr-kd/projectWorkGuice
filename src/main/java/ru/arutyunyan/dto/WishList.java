@@ -3,7 +3,6 @@ package ru.arutyunyan.dto;
 import com.github.javafaker.Faker;
 import lombok.Getter;
 
-
 import java.util.Locale;
 
 

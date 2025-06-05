@@ -8,7 +8,7 @@ import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.common.AbsCommon;
 
 
-public abstract class AbsBasePage<T> extends AbsCommon {
+public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsCommon {
 
     private final String baseUrl = System.getProperty("base.url");
 
@@ -18,7 +18,7 @@ public abstract class AbsBasePage<T> extends AbsCommon {
     }
 
     private String getPath() {
-        Class<T> clazz = (Class<T>) this.getClass();
+        Class<?> clazz = this.getClass();
         if (clazz.isAnnotationPresent(Path.class)) {
             Path path = clazz.getDeclaredAnnotation(Path.class);
             return path.value();
@@ -27,6 +27,7 @@ public abstract class AbsBasePage<T> extends AbsCommon {
     }
 
 
+    @SuppressWarnings("unchecked")
     @Step("Открытие страницы")
     public T open() {
         driver.get(baseUrl + getPath());
