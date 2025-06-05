@@ -29,10 +29,10 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     private WebElement buttonCreateWishList;
 
     @FindBy(xpath = "//button[text()='Удалить']")
-    public WebElement buttonDeleteWish;
+    private WebElement buttonDeleteWish;
 
     @FindBy(xpath = "//button[text()='Удалить']")
-    public List<WebElement> buttonDeleteWishList;
+    private List<WebElement> buttonDeleteWishList;
 
     @FindBy(xpath = "(//button[@class='btn btn-primary'])[last()]")
     private WebElement buttonViewWishList;
@@ -103,7 +103,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return lastNamePresent.getText();
     }
 
-    @Step("Скрол и клик по элементу: {element}")
+    @Step("Скрол и клик по элементу")
     public UsersPage viewWishList() {
         actions.sendEnd(2000, 1000);
         buttonViewWishList.click();
@@ -128,7 +128,6 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
                 new WebDriverWait(driver, Duration.ofSeconds(10))
                         .until(ExpectedConditions.stalenessOf(deleteButtons.get(0)));
-
                 deleteButtons = buttonDeleteWishList;
 
             } catch (StaleElementReferenceException e) {
@@ -151,37 +150,37 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return isPresent;
     }
 
-    @Step("Проверка добавление желания по названию")
-    public UsersPage checkAddNameWishList(WishList wishList) {
+    @Step("Проверка, добавлено ли желания по названию")
+    public UsersPage addNameWishListShouldBeSame(WishList wishList) {
         assertThat(getPageTextNameRegistrationPresent())
                 .as("Элемент с названием %s не найден", wishList.getProductName())
                 .isEqualTo(wishList.getProductName());
         return this;
     }
 
-    @Step("Проверка добавление желания по описанию")
-    public UsersPage checkAddDescriptionWishLis(WishList wishList) {
+    @Step("Проверка, добавлено ли желания по описанию")
+    public UsersPage addDescriptionWishLisShouldBeSame(WishList wishList) {
         assertThat(wishList.getDescription())
                 .as("Элемент с описанием %s не найден", getPageTextDescriptionPresent())
                 .isEqualTo(getPageTextDescriptionPresent());
         return this;
     }
 
-    @Step("Проверка удаления желания")
-    public void isCheckDeleteWishList() {
+    @Step("Проверка, что желание удаленно")
+    public void wishListShouldBeDelete() {
         assertThat(isDeletePresent()).as("Проверка удаления элемента").isTrue();
     }
 
-    @Step("Проверка наличие кнопки удаления на подарке")
-    public UsersPage checkButtonDeleteWishList() {
+    @Step("Проверка, что отсутствует кнопка удаления на подарке")
+    public UsersPage buttonDeleteWishListShouldNotBeDisplayed() {
         assertThat(verifyDeleteButtonNotPresent())
                 .withFailMessage("Не все подарки удалились")
                 .isFalse();
         return this;
     }
 
-    @Step("Проверка наличие подарка по названию")
-    public void checkForNameWishList(WishList wishList) {
+    @Step("Проверка, что отсутствует подарок с названием")
+    public void nameWishListShouldNotBeDisplayed(WishList wishList) {
         assertThat(getNameWishList())
                 .as("Элемент с названием %s не найден", wishList.getProductName())
                 .isEqualTo(wishList.getProductName());

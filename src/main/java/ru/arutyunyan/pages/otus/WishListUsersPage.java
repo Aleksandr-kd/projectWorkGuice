@@ -74,21 +74,21 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
         return pageUsers.getText();
     }
 
-    @Step("Проверка открытия правильной страницы")
-    public WishListUsersPage pageTitleShouldBeSames(String string) {
-        assertThat(getPageTextUsers()).isEqualTo(string);
+    @Step("Проверка, что заголовок страницы соответствует '{title}'")
+    public WishListUsersPage pageTitleShouldBeSame(String title) {
+        assertThat(getPageTextUsers()).isEqualTo(title);
         return this;
     }
 
-    @Step("Проверка открытия страницы со списками желаний")
-    public WishListUsersPage pageTitleListShouldBeSames(String string) {
-        assertThat(getTextPageTextWishListUsers()).isEqualTo(string);
+    @Step("Проверка, что заголовок страницы соответствует заголовку списками желаний '{title}'")
+    public WishListUsersPage pageTitleListShouldBeSame(String title) {
+        assertThat(getTextPageTextWishListUsers()).isEqualTo(title);
         return this;
     }
 
-    @Step("Проверка названия страницы со списками желаний")
-    public WishListUsersPage pageNameShouldBeSames(String string) {
-        assertThat(getTextPageTextWishListUsers()).isEqualTo(string);
+    @Step("Проверка, что заголовок страницы соответствует '{title}'")
+    public WishListUsersPage pageNameShouldBeSame(String title) {
+        assertThat(getTextPageTextWishListUsers()).isEqualTo(title);
         return this;
     }
 }

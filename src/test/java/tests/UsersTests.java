@@ -28,11 +28,12 @@ public class UsersTests {
     private WishList wishList;
 
     @Test
-    @Tag("users")
+    @Tag("test")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
-        usersPage.open();
+        usersPage
+                .open();
 
         clientOtusPage
                 .registration(user)
@@ -42,18 +43,19 @@ public class UsersTests {
                 .clickCreateNewWishList()
                 .formCreateNewWishList(wishList)
                 .clickButtonCreate()
-                .checkAddNameWishList(wishList)
-                .checkAddDescriptionWishLis(wishList)
-                .isCheckDeleteWishList();
+                .addNameWishListShouldBeSame(wishList)
+                .addDescriptionWishLisShouldBeSame(wishList)
+                .wishListShouldBeDelete();
 
     }
 
     @Test
-    @Tag("users")
+    @Tag("test")
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
 
-        usersPage.open();
+        usersPage
+                .open();
 
         clientOtusPage
                 .registration(user)
@@ -61,11 +63,11 @@ public class UsersTests {
 
         usersPage
                 .deleteAllWishLists()
-                .checkButtonDeleteWishList()
+                .buttonDeleteWishListShouldNotBeDisplayed()
                 .clickCreateNewWishList()
                 .formCreateNewWishList(wishList)
                 .clickButtonCreate()
                 .viewWishList()
-                .checkForNameWishList(wishList);
+                .nameWishListShouldNotBeDisplayed(wishList);
     }
 }

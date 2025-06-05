@@ -11,7 +11,7 @@ public class Waiters {
     private final WebDriver driver;
 
     private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(20);
-    private static final Duration POLLING_INTERVAL = Duration.ofMillis(50);
+    private static final Duration POLLING_INTERVAL = Duration.ofMillis(500);
 
     public Waiters(WebDriver driver) {
         this.driver = driver;
@@ -34,11 +34,11 @@ public class Waiters {
         return getFluentWait().until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    private FluentWait<WebDriver> getFluentWait() {
+    protected FluentWait<WebDriver> getFluentWait() {
         return getFluentWait(DEFAULT_TIMEOUT);
     }
 
-    private FluentWait<WebDriver> getFluentWait(Duration timeout) {
+    protected FluentWait<WebDriver> getFluentWait(Duration timeout) {
         return new FluentWait<>(driver)
                 .withTimeout(timeout)
                 .pollingEvery(POLLING_INTERVAL)

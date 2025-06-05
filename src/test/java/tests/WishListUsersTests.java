@@ -23,7 +23,7 @@ public class WishListUsersTests {
     private User user;
 
     @Test
-    @Tag("users")
+    @Tag("test")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
 
@@ -36,12 +36,12 @@ public class WishListUsersTests {
 
         wishListUsersPage
                 .openUsers()
-                .pageTitleShouldBeSames("Пользователи")
+                .pageTitleShouldBeSame("Пользоват ели")
                 .viewWistListOne()
-                .pageTitleListShouldBeSames("Списки желаний пользователя")
+                .pageTitleListShouldBeSame("Списки ж еланий пользователя")
                 .backListUsers()
                 .viewWistListLast()
-                .pageNameShouldBeSames("Списки желаний пользователя")
+                .pageNameShouldBeSame("Списки желан ий пользователя")
                 .backListUsers();
     }
 }
