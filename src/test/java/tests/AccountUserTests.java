@@ -28,9 +28,9 @@ public class AccountUserTests {
                 .open()
                 .pageTitleShouldBeSame("Регистрация")
                 .registration(user)
-                .pageTitleRegistrationShouldBeSame("Вход в сис тему")
+                .pageTitleRegistrationShouldBeSame("Вход в систему")
                 .authorization(user)
-                .pageTitleAuthorizationShouldBeSame("Мои спис ки желаний");
+                .pageTitleAuthorizationShouldBeSame("Мои списки желаний");
     }
 }
 

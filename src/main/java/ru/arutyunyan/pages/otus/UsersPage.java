@@ -34,7 +34,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @FindBy(xpath = "//button[text()='Удалить']")
     private List<WebElement> buttonDeleteWishList;
 
-    @FindBy(xpath = "(//button[@class='btn btn-primary'])[last()]")
+    @FindBy(xpath = "(//button[contains(@class, 'btn-primary')])[last()]")
     private WebElement buttonViewWishList;
 
     @FindBy(xpath = "//label[text()='Название']/following-sibling::input")
@@ -73,13 +73,13 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
     @Step("Заполнить название")
     public void setNameNewWishList(WishList wishList) {
-        namePresent.click();
+        namePresent.clear();
         namePresent.sendKeys(wishList.getProductName());
     }
 
     @Step("Заполнить описание")
     public void setDescriptionNewWishList(WishList wishList) {
-        descriptionPresent.click();
+        descriptionPresent.clear();
         descriptionPresent.sendKeys(wishList.getDescription());
     }
 
@@ -87,6 +87,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     public UsersPage formCreateNewWishList(WishList wishList) {
         setNameNewWishList(wishList);
         setDescriptionNewWishList(wishList);
+        waiters.waitForPageLoad();
         return this;
     }
 
@@ -98,28 +99,24 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
     @Step("Получение название последнего желания")
     public String getPageTextNameRegistrationPresent() {
-        actions.sendEnd(2000, 1000);
-        waiters.waitForElementVisible(lastNamePresent);
-        return lastNamePresent.getText();
+        return waiters.waitForElementVisible(lastNamePresent).getText();
     }
 
     @Step("Скрол и клик по элементу")
     public UsersPage viewWishList() {
-        actions.sendEnd(2000, 1000);
+        waiters.asyncWait(1000);
         buttonViewWishList.click();
         return this;
     }
 
     @Step("Получение названия последнего желания")
     public String getNameWishList() {
-        actions.pause(2000);
         waiters.waitForElementVisible(nameWishList);
         return nameWishList.getText();
     }
 
     @Step("Удаление всех элементов списка")
     public UsersPage deleteAllWishLists() {
-        actions.pause(2000);
         List<WebElement> deleteButtons = buttonDeleteWishList;
 
         while (!deleteButtons.isEmpty()) {
