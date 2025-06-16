@@ -1,6 +1,7 @@
 package ru.arutyunyan.pages.otus;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Path("/register")
 public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
-
     public WishListUsersPage(WebDriver driver) {
         super(driver);
     }
@@ -42,36 +42,32 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
 
     @Step("Открываю страницу пользователей")
     public WishListUsersPage openUsers() {
-        actions.pause(2000);
-        clickUsers.click();
+        waiters.waitAndClick(clickUsers);
         return this;
     }
 
     @Step("Просмотреть список желаний первого пользователя")
     public WishListUsersPage viewWistListOne() {
-        actions.pause(2000);
         userOne.click();
         return this;
     }
 
     @Step("Просмотреть список желаний последнего пользователя")
     public WishListUsersPage viewWistListLast() {
-        actions.sendEnd(1000, 1000);
-        userLast.click();
+        waiters.waitForElementVisible(userLast).sendKeys(Keys.END);
+        waiters.waitAndClick(userLast);
         return this;
     }
 
     @Step("Вернутся назад к списку пользователей")
     public WishListUsersPage backListUsers() {
-        actions.pause(2000);
         backList.click();
         return this;
     }
 
     @Step("Получение названия страницы")
     public String getPageTextUsers() {
-        actions.pause(2000);
-        return pageUsers.getText();
+        return waiters.waitAndGetText(pageUsers);
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}'")

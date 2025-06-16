@@ -1,7 +1,7 @@
 package ru.arutyunyan.pages.otus;
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,11 +9,14 @@ import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.pages.AbsBasePage;
 
+import java.util.Random;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Path("/register")
 public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
+
     public ClientOtusPage(WebDriver driver) {
         super(driver);
     }
@@ -73,59 +76,91 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @Step("Заполнение формы регистрации пользователя")
     public ClientOtusPage registration(User user) {
         int attempt = 1;
+        String suffix = "";
 
         while (attempt <= 5) {
             try {
-                actions.pause(2000);
+                if (attempt > 1) {
+                    suffix += getRandomChar();
+                    newUser(user, suffix);
+                    Allure.step("Попытка #" + attempt + ": " + user.getEmail());
+                }
+                fillForm(user);
 
-                inputName.clear();
-                inputName.sendKeys(user.getName());
-                actions.pause(1000);
-
-                inputEmail.clear();
-                inputEmail.sendKeys(user.getEmail());
-                actions.pause(1000);
-
-                inputPassword.clear();
-                inputPassword.sendKeys(user.getPassword());
-                actions.pause(1000);
-
-                clickButtonRegistration();
-                waiters.waitForPageLoad();
-
-                if (!isErrorMessageDisplayed()) {
+                if (!isErrorPresent()) {
                     return this;
                 }
             } catch (Exception e) {
-                System.out.println("Попытка " + attempt + " не удалась: " + e.getMessage());
+                Allure.step("Ошибка: " + e.getMessage());
             }
-
-            user = new User();
             attempt++;
-            actions.pause(2000);
         }
         throw new RuntimeException("Не удалось зарегистрировать пользователя");
     }
 
-    private boolean isErrorMessageDisplayed() {
+    private void fillForm(User user) {
+        Allure.step("Вводим данныe: "
+                + "\nname: " + user.getName()
+                + "\nemail: " + user.getEmail()
+                + "\npassword = " + user.getPassword());
+
+        inputName.clear();
+        inputName.sendKeys(user.getName());
+
+        inputEmail.clear();
+        inputEmail.sendKeys(user.getEmail());
+
+        inputPassword.clear();
+        inputPassword.sendKeys(user.getPassword());
+
+        clickButtonRegistration();
+        waiters.waitForPageLoad();
+    }
+
+    /**
+     * Проверяет видимость сообщения об ошибке регистрации.
+     *
+     * @return true если сообщение отобразится в течение 2 секунд
+     */
+    private boolean isErrorPresent() {
         try {
+            waiters.waitForElementVisible(notRegistrationMessage, 2);
             return notRegistrationMessage.isDisplayed();
-        } catch (NoSuchElementException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
+    /**
+     * Генерирует случайную строчную букву английского алфавита.
+     *
+     * @return Случайный символ из диапазона 'a'-'z'
+     */
+    private String getRandomChar() {
+        String letters = "abcdefghijklmnopqrstuvwxyz";
+        int index = new Random().nextInt(letters.length());
+        return letters.substring(index, index + 1);
+    }
+
+    private void newUser(User user, String suffix) {
+        String oldName = user.getName();
+        String oldEmail = user.getEmail();
+
+        user.setName(oldName + suffix);
+        user.setEmail(oldEmail.replace("@", suffix + "@"));
+
+        Allure.step("Изменение юзера: "
+                + "Было: " + oldName + ", стало: " + user.getName()
+                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail());
+    }
+
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
-        actions.pause(2000);
-
         inputName.clear();
         inputName.sendKeys(user.getName());
-        actions.pause(1000);
 
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
-        actions.pause(1000);
 
         clickButtonLogin();
         waiters.waitForPageLoad();

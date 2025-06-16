@@ -2,7 +2,10 @@ package ru.arutyunyan.utils;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 
 
@@ -62,9 +65,22 @@ public class Waiters {
         return getWait().until(ExpectedConditions.visibilityOf(element));
     }
 
+    @Step("Ожидание видимости элемента")
+    public void waitForElementVisible(WebElement element, int timeoutSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
     @Step("Ожидание загрузки страницы")
     public void waitForPageLoad() {
         getWait().until(d ->
                 ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
+    }
+
+    @Step("Асинхронное ожидание {milliseconds} мс")
+    public void asyncWait(int milliseconds) {
+        int safeMs = Math.min(milliseconds, 5000);
+        ((JavascriptExecutor)driver).executeAsyncScript(
+                "const done = arguments[0]; setTimeout(done, " + safeMs + ");");
     }
 }

@@ -36,12 +36,12 @@ public class WishListUsersTests {
 
         wishListUsersPage
                 .openUsers()
-                .pageTitleShouldBeSame("Пользоват ели")
+                .pageTitleShouldBeSame("Пользователи")
                 .viewWistListOne()
-                .pageTitleListShouldBeSame("Списки ж еланий пользователя")
+                .pageTitleListShouldBeSame("Списки желаний пользователя")
                 .backListUsers()
                 .viewWistListLast()
-                .pageNameShouldBeSame("Списки желан ий пользователя")
+                .pageNameShouldBeSame("Списки желаний пользователя")
                 .backListUsers();
     }
 }
