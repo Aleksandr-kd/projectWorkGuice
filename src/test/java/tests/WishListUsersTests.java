@@ -10,6 +10,7 @@ import ru.arutyunyan.extension.TestSetupExtension;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 import ru.arutyunyan.pages.otus.WishListUsersPage;
 
+
 @ExtendWith(TestSetupExtension.class)
 public class WishListUsersTests {
 

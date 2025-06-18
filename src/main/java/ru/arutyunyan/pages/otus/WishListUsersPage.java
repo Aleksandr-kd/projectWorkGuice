@@ -35,9 +35,12 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
     @FindBy(xpath = "//h2[text()='Списки желаний пользователя']")
     private WebElement pageTextWishListUsers;
 
+    @FindBy(xpath = "//h2[text()='Загрузка']")
+    private WebElement pageTextDownload;
+
     @Step("Получение название страницы")
     public String getTextPageTextWishListUsers() {
-        return pageTextWishListUsers.getText();
+        return waiters.waitAndGetText(pageTextWishListUsers);
     }
 
     @Step("Открываю страницу пользователей")
@@ -54,6 +57,7 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
 
     @Step("Просмотреть список желаний последнего пользователя")
     public WishListUsersPage viewWistListLast() {
+        waiters.waitForElementVisible(userLast).sendKeys(Keys.END);
         waiters.waitForElementVisible(userLast).sendKeys(Keys.END);
         waiters.waitAndClick(userLast);
         return this;

@@ -1,6 +1,5 @@
 package ru.arutyunyan.factory;
 
-import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,6 +12,7 @@ import ru.arutyunyan.factory.settings.FirefoxSettings;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.openqa.selenium.MutableCapabilities;
 
 
 public class WebDriverFactory {
@@ -21,21 +21,17 @@ public class WebDriverFactory {
     private final String browserVersion = System.getProperty("browserVersion");
     private String remoteUrl = System.getProperty("remote.url", "");
 
-    public WebDriver getDriver() throws MalformedURLException {
+    public WebDriver createDriver() throws MalformedURLException {
         if (!remoteUrl.isEmpty()) {
             MutableCapabilities mutableCapabilities = new MutableCapabilities();
             mutableCapabilities.setCapability("browserName", browserName);
             mutableCapabilities.setCapability("browserVersion", browserVersion);
             return new RemoteWebDriver(new URL(remoteUrl), mutableCapabilities);
         }
-        switch (browserName.toLowerCase()) {
-            case "chrome":
-                return new ChromeDriver((ChromeOptions) new ChromeSettings().settings());
-            case "firefox":
-                return new FirefoxDriver((FirefoxOptions) new FirefoxSettings().settings());
-            default:
-                throw new BrowserNotSupportedException(browserName);
-        }
+        return switch (browserName.toLowerCase()) {
+            case "chrome" -> new ChromeDriver((ChromeOptions) new ChromeSettings().settings());
+            case "firefox" -> new FirefoxDriver((FirefoxOptions) new FirefoxSettings().settings());
+            default -> throw new BrowserNotSupportedException(browserName);
+        };
     }
 }
-

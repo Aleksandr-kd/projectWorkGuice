@@ -2,13 +2,13 @@ package ru.arutyunyan.pages.otus;
 
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.pages.AbsBasePage;
-
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,6 +47,9 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @FindBy(xpath = "//h2[text()='Мои списки желаний']")
     private WebElement listWishList;
+
+    @FindBy(xpath = "//*[@class='fade modal']")
+    private WebElement modal;
 
     @Step("Получение текста авторизации")
     public String getTextAccount() {
@@ -106,10 +109,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
         inputName.clear();
         inputName.sendKeys(user.getName());
-
         inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
-
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
@@ -142,6 +143,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         return letters.substring(index, index + 1);
     }
 
+    @Step("Получаем нового пользователя")
     private void newUser(User user, String suffix) {
         String oldName = user.getName();
         String oldEmail = user.getEmail();
@@ -156,14 +158,27 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
-        inputName.clear();
-        inputName.sendKeys(user.getName());
 
-        inputPassword.clear();
-        inputPassword.sendKeys(user.getPassword());
 
-        clickButtonLogin();
+        $(By.xpath("//input[@type='text']")).clear();
+        $(By.xpath("//input[@type='text']")).sendKeys(user.getName());
+
+        $(By.xpath("//input[@type='password']")).clear();
+        $(By.xpath("//input[@type='password']")).sendKeys(user.getPassword());
+
+        $(By.xpath("//button[text()='Войти']")).click();
+
+
+//        inputName.clear();
+//        inputName.sendKeys(user.getName());
+//
+//        inputPassword.clear();
+//        inputPassword.sendKeys(user.getPassword());
+//
+//        clickButtonLogin();
         waiters.waitForPageLoad();
+
+
         return this;
     }
 

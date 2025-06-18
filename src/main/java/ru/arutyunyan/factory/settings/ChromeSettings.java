@@ -1,27 +1,41 @@
 package ru.arutyunyan.factory.settings;
 
-
-import ru.arutyunyan.data.BrowserModeData;
-import ru.arutyunyan.exceptions.ModeNotSupportedException;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
+import ru.arutyunyan.data.BrowserModeData;
+import ru.arutyunyan.exceptions.ModeNotSupportedException;
+
+import java.util.UUID;
 
 
 public class ChromeSettings implements IBrowserSettings {
 
     private final String mode = System.getProperty("mode").toUpperCase();
 
+    @Override
     public AbstractDriverOptions<?> settings() {
-        ChromeOptions chromeOptions = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+
+        options.addArguments("--incognito");
+
+        String profilePath = System.getProperty("java.io.tmpdir") + "/chrome-profile-" + UUID.randomUUID();
+        options.addArguments("--user-data-dir=" + profilePath);
+
         BrowserModeData modeData = BrowserModeData.valueOf(mode);
 
         switch (modeData) {
             case HEADLESS:
-                return chromeOptions.addArguments("--headless=new");
+                options.addArguments("--window-size=1920,1080");
+                options.addArguments("--headless=new");
+                return options;
             case FULLSCREEN:
-                return chromeOptions.addArguments("--start-fullscreen");
+                return options.addArguments("--start-maximized");
             case KIOSK:
-                return chromeOptions.addArguments("--kiosk");
+                return options.addArguments("--kiosk");
         }
         throw new ModeNotSupportedException(mode);
     }

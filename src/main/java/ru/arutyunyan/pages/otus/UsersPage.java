@@ -54,6 +54,9 @@ public class UsersPage extends AbsBasePage<UsersPage> {
             "//p[@class='card-text']")
     private WebElement lastDescriptionPresent;
 
+    @FindBy(xpath = "//*[@class='fade modal']")
+    private WebElement modal;
+
     @Step("Получение описание последнего желания")
     public String getPageTextDescriptionPresent() {
         return lastDescriptionPresent.getText();
@@ -102,9 +105,10 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return waiters.waitForElementVisible(lastNamePresent).getText();
     }
 
-    @Step("Скрол и клик по элементу")
+    @Step("Просмотр добавленного списка желания")
     public UsersPage viewWishList() {
-        waiters.asyncWait(1000);
+        waiters.waitForElementVisible(modal);
+        waiters.waitForElementInVisible(modal);
         buttonViewWishList.click();
         return this;
     }
@@ -121,7 +125,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
         while (!deleteButtons.isEmpty()) {
             try {
-                deleteButtons.get(0).click();
+                deleteButtons.getFirst().click();
 
                 new WebDriverWait(driver, Duration.ofSeconds(10))
                         .until(ExpectedConditions.stalenessOf(deleteButtons.get(0)));
