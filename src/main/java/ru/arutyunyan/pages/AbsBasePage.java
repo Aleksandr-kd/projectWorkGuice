@@ -1,6 +1,5 @@
 package ru.arutyunyan.pages;
 
-
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -25,7 +24,6 @@ public abstract class AbsBasePage<T extends AbsBasePage<T>> extends AbsCommon {
         }
         throw new RuntimeException(String.format("Path on class %s not found", clazz.getName()));
     }
-
 
     @SuppressWarnings("unchecked")
     @Step("Открытие страницы")

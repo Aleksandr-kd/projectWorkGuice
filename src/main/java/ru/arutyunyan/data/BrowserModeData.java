@@ -11,7 +11,7 @@ public enum BrowserModeData {
 
     private final String name;
 
-    BrowserModeData(String name){
-        this.name=name;
+    BrowserModeData(String name) {
+        this.name = name;
     }
 }

@@ -133,11 +133,14 @@
 
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+<!--                        -Dorg.aspectj.weaver.loadtime.configuration=file:${project.basedir}/src/test/resources/aop.xml-->
+<!--                        -Daj.weaving.verbose=false-->
                     </argLine>
 
                     <systemPropertyVariables>
                         <browser>chrome</browser>
                         <mode>headless</mode>
+                        <grid.url>http://localhost:4444/wd/hub</grid.url>
                         <base.url>${base.url}</base.url>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>

@@ -2,12 +2,13 @@ package ru.arutyunyan.dto;
 
 import com.github.javafaker.Faker;
 import lombok.Getter;
-
+import lombok.ToString;
 import java.util.Locale;
 
+
+@ToString
 @Getter
 public class WishList {
-
     private final Faker faker = new Faker(new Locale("ru"));
     private final String productName = faker.commerce().productName();
     private final String price = faker.commerce().price();
@@ -16,14 +17,4 @@ public class WishList {
             "Это описание и сам товар: %s могут не совпадать по логике друг с другом: %s",
             productName, description
     );
-
-    @Override
-    public String toString() {
-        return "WishList{" +
-                "productName='" + productName + '\'' +
-                ", price='" + price + '\'' +
-                ", descriptionProduct='" + descriptionProduct + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

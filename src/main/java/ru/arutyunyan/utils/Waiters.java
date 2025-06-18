@@ -66,6 +66,11 @@ public class Waiters {
     }
 
     @Step("Ожидание видимости элемента")
+    public void waitForElementInVisible(WebElement element) {
+        getWait().until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    @Step("Ожидание видимости элемента")
     public void waitForElementVisible(WebElement element, int timeoutSeconds) {
         new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
                 .until(ExpectedConditions.visibilityOf(element));
@@ -75,12 +80,5 @@ public class Waiters {
     public void waitForPageLoad() {
         getWait().until(d ->
                 ((JavascriptExecutor) d).executeScript("return document.readyState").equals("complete"));
-    }
-
-    @Step("Асинхронное ожидание {milliseconds} мс")
-    public void asyncWait(int milliseconds) {
-        int safeMs = Math.min(milliseconds, 5000);
-        ((JavascriptExecutor)driver).executeAsyncScript(
-                "const done = arguments[0]; setTimeout(done, " + safeMs + ");");
     }
 }
