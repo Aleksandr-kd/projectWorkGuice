@@ -127,14 +127,14 @@
                             junit.jupiter.execution.parallel.mode.default=concurrent
                             junit.jupiter.execution.parallel.mode.classes.default=concurrent
                             junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=2
+                            junit.jupiter.execution.parallel.config.fixed.parallelism=1
                         </configurationParameters>
                     </properties>
 
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-<!--                        -Dorg.aspectj.weaver.loadtime.configuration=file:${project.basedir}/src/test/resources/aop.xml-->
-<!--                        -Daj.weaving.verbose=false-->
+                        <!--                        -Dorg.aspectj.weaver.loadtime.configuration=file:${project.basedir}/src/test/resources/aop.xml-->
+                        <!--                        -Daj.weaving.verbose=false-->
                     </argLine>
 
                     <systemPropertyVariables>

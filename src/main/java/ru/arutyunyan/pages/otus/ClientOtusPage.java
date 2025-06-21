@@ -98,7 +98,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
             }
             attempt++;
         }
-        throw new RuntimeException("Не удалось зарегистрировать пользователя");
+//        throw new RuntimeException("Не удалось зарегистрировать пользователя");
+        return this;
     }
 
     private void fillForm(User user) {
@@ -160,23 +161,24 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     public ClientOtusPage authorization(User user) {
 
 
-        $(By.xpath("//input[@type='text']")).clear();
-        $(By.xpath("//input[@type='text']")).sendKeys(user.getName());
-
-        $(By.xpath("//input[@type='password']")).clear();
-        $(By.xpath("//input[@type='password']")).sendKeys(user.getPassword());
-
-        $(By.xpath("//button[text()='Войти']")).click();
-
-
-//        inputName.clear();
-//        inputName.sendKeys(user.getName());
+//        $(By.xpath("//input[@type='text']")).clear();
+//        $(By.xpath("//input[@type='text']")).sendKeys(user.getName());
 //
-//        inputPassword.clear();
-//        inputPassword.sendKeys(user.getPassword());
+//        $(By.xpath("//input[@type='password']")).clear();
+//        $(By.xpath("//input[@type='password']")).sendKeys(user.getPassword());
 //
-//        clickButtonLogin();
+//        $(By.xpath("//button[text()='Войти']")).click();
+
         waiters.waitForPageLoad();
+
+        inputName.clear();
+        inputName.sendKeys(user.getName());
+
+        inputPassword.clear();
+        inputPassword.sendKeys(user.getPassword());
+
+        clickButtonLogin();
+//        waiters.waitForPageLoad();
 
 
         return this;

@@ -50,6 +50,10 @@ public class Waiters {
                 .ignoring(ElementNotInteractableException.class);
     }
 
+    public boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
     @Step("Ожидание и клик по элементу")
     public void waitAndClick(WebElement element) {
         waitForElementToBeClickable(element).click();
@@ -65,7 +69,7 @@ public class Waiters {
         return getWait().until(ExpectedConditions.visibilityOf(element));
     }
 
-    @Step("Ожидание видимости элемента")
+    @Step("Ожидание исчезновения элемента")
     public void waitForElementInVisible(WebElement element) {
         getWait().until(ExpectedConditions.invisibilityOf(element));
     }
