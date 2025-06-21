@@ -55,7 +55,7 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Check running containers
-        run: docker ps -av
+        run: docker ps -a
 
       - name: Build project and run tests
         run: |
