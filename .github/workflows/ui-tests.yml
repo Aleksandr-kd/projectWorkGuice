@@ -54,6 +54,12 @@ jobs:
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
+      - name: Print Selenoid logs
+        run: docker logs selenoid
+
+      - name: Check running containers
+        run: docker ps -av
+
       - name: Build project and run tests
         run: |
           mvn clean test \
