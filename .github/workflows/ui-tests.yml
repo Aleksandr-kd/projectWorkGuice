@@ -33,7 +33,7 @@ jobs:
           mvn clean test \
             -Dgroups=test \
             -Dbrowser=firefox \
-            -Dmode=fullscreen
+            -Dmode=headless
 
       - name: Generate Allure Report
         run: |

@@ -25,7 +25,6 @@ public class ChromeSettings implements IBrowserSettings {
 
         switch (modeData) {
             case HEADLESS:
-                options.addArguments("--window-size=1920,1080");
                 options.addArguments("--headless=new");
                 return options;
             case FULLSCREEN:
