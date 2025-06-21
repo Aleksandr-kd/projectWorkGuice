@@ -107,11 +107,19 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
     @Step("Просмотр добавленного списка желания")
     public UsersPage viewWishList() {
-        waiters.waitForElementVisible(modal);
-        waiters.waitForElementInVisible(modal);
+        if (waiters.isElementPresent(By.xpath("//*[@class='fade modal']"))) {
+            waiters.waitForElementVisible(modal);
+            waiters.waitForElementInVisible(modal);
+        }
         buttonViewWishList.click();
         return this;
     }
+//    public UsersPage viewWishList() {
+//        waiters.waitForElementVisible(modal);
+//        waiters.waitForElementInVisible(modal);
+//        buttonViewWishList.click();
+//        return this;
+//    }
 
     @Step("Получение названия последнего желания")
     public String getNameWishList() {

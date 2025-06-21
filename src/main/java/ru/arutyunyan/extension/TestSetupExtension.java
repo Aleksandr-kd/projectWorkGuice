@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
 public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback {
 
     private final AllureScreenshotUtils screenshotUtils = new AllureScreenshotUtils();
-    private Injector injector;
     private WebDriver driver;
 
     @Override
@@ -26,7 +25,7 @@ public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback
         driver = new WebDriverFactory().createDriver();
         context.getStore(namespace).put("driver", driver);
 
-        this.injector = Guice.createInjector(
+        Injector injector = Guice.createInjector(
                 new GuicePageModule(driver),
                 new GuiceDtoModule()
         );

@@ -15,10 +15,6 @@ public class ChromeSettings implements IBrowserSettings {
     @Override
     public AbstractDriverOptions<?> settings() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-blink-features=AutomationControlled");
 
         options.addArguments("--incognito");
 
