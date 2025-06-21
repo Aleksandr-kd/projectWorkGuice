@@ -4,11 +4,11 @@
     "versions": {
       "124.0": {
         "image": "selenoid/vnc:chrome_124.0",
-        "port": "4444",
+        "port": "4444"
       },
       "127.0": {
         "image": "selenoid/vnc:chrome_127.0",
-        "port": "4444",
+        "port": "4444"
       }
     }
   },
@@ -17,7 +17,7 @@
     "versions": {
       "124.0": {
         "image": "selenoid/vnc:firefox_124.0",
-        "port": "4444",
+        "port": "4444"
       }
     }
   }
