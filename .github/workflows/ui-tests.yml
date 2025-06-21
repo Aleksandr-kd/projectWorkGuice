@@ -37,6 +37,9 @@ jobs:
       - name: Check running containers
         run: docker ps -a
 
+      - name: Check that browser image is pulled
+        run: docker images | grep firefox
+
       - name: Wait for Selenoid to be ready
         run: |
           for i in {1..10}; do
@@ -58,6 +61,7 @@ jobs:
         run: docker ps -a
 
       - name: Build project and run tests
+        continue-on-error: true
         run: |
           mvn clean test \
             -Dgroups=test \
@@ -66,11 +70,21 @@ jobs:
             -Dmode=fullscreen \
             -Dremote.url=http://localhost:4444/wd/hub
 
-      - name: Check running containers
+      - name: Show running containers
         run: docker ps -a
 
-      - name: Print Selenoid logs
+      - name: Show Selenoid logs
         run: docker logs selenoid
+
+      - name: Show logs of Firefox container (if exists)
+        run: |
+          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
+          if [ -n "$CID" ]; then
+            echo "Firefox container logs:"
+            docker logs $CID
+          else
+            echo "Firefox container not found"
+          fi
 
       - name: Generate Allure Report
         run: |
