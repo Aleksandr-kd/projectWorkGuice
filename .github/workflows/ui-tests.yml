@@ -60,6 +60,9 @@ jobs:
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
+      - name: Pull browser image for Selenoid
+        run: docker pull selenoid/vnc:firefox_124.0
+
       - name: Build project and run tests
         run: |
           mvn clean test \
