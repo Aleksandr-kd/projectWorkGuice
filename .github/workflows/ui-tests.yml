@@ -40,6 +40,10 @@ jobs:
           TARGET_PATH="/usr/local/bin/docker-compose"
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
+
+      - name: Pull browser image for Selenoid
+        run: docker pull selenoid/vnc:firefox_124.0
+
       - name: Start Selenoid
         run: docker-compose up -d
 
@@ -62,9 +66,6 @@ jobs:
           tar -zxvf allure-2.34.0.tgz
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-
-      - name: Pull browser image for Selenoid
-        run: docker pull selenoid/vnc:firefox_124.0
 
       - name: Build project and run tests
         run: |

@@ -5,14 +5,10 @@
       "124.0": {
         "image": "selenoid/vnc:chrome_124.0",
         "port": "4444",
-        "path": "/wd/hub",
-        "tmpfs": {"/tmp": "size=512m"}
       },
       "127.0": {
         "image": "selenoid/vnc:chrome_127.0",
         "port": "4444",
-        "path": "/wd/hub",
-        "tmpfs": {"/tmp": "size=512m"}
       }
     }
   },
@@ -22,8 +18,6 @@
       "124.0": {
         "image": "selenoid/vnc:firefox_124.0",
         "port": "4444",
-        "path": "/wd/hub",
-        "tmpfs": {"/tmp": "size=512m"}
       }
     }
   }
