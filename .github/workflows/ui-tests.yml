@@ -43,6 +43,9 @@ jobs:
       - name: Start Selenoid
         run: docker-compose up -d
 
+      - name: Check running containers
+        run: docker ps -a
+
       - name: Wait for Selenoid to be ready
         run: |
           for i in {1..10}; do
@@ -68,7 +71,7 @@ jobs:
           mvn clean test \
             -Dgroups=test \
             -Dbrowser=firefox \
-          -DbrowserVersion=124.0 \
+            -DbrowserVersion=124.0 \
             -Dmode=fullscreen \
             -Dremote.url=http://localhost:4444/wd/hub
 
