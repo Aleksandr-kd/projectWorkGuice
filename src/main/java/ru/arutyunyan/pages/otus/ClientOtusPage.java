@@ -98,8 +98,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
             }
             attempt++;
         }
-//        throw new RuntimeException("Не удалось зарегистрировать пользователя");
-        return this;
+        throw new RuntimeException("Не удалось зарегистрировать пользователя");
     }
 
     private void fillForm(User user) {

@@ -75,9 +75,14 @@ public class Waiters {
     }
 
     @Step("Ожидание видимости элемента")
-    public void waitForElementVisible(WebElement element, int timeoutSeconds) {
-        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
-                .until(ExpectedConditions.visibilityOf(element));
+    public boolean waitForElementVisible(WebElement element, int timeoutSeconds) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+                    .until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     @Step("Ожидание загрузки страницы")

@@ -10,6 +10,19 @@ on:
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
+    services:
+      selenoid:
+        image: aerokube/selenoid:latest-release
+        ports:
+          - 4444:4444
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        options: >-
+          --privileged
+          --health-cmd "wget --no-verbose --tries=1 --spider http://localhost:4444/status || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout repository
@@ -18,9 +31,27 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
+      - name: Set up Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.5/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
+      - name: Start Selenoid
+        run: docker-compose up -d
+
+      - name: Wait for Selenoid to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:4444/status | grep -q "ready"; then
+              echo "Selenoid is ready"
+              break
+            fi
+            echo "Waiting for Selenoid..."
+            sleep 3
+          done
       - name: Install Allure CLI manually
         run: |
           wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
@@ -33,7 +64,8 @@ jobs:
           mvn clean test \
             -Dgroups=test \
             -Dbrowser=firefox \
-            -Dmode=headless
+            -Dmode=fullscreen \
+            -Dremote.url=http://localhost:4444/wd/hub
 
       - name: Generate Allure Report
         run: |

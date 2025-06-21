@@ -12,6 +12,8 @@ import ru.arutyunyan.factory.settings.FirefoxSettings;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
+
 import org.openqa.selenium.MutableCapabilities;
 
 
@@ -23,10 +25,24 @@ public class WebDriverFactory {
 
     public WebDriver createDriver() throws MalformedURLException {
         if (!remoteUrl.isEmpty()) {
-            MutableCapabilities mutableCapabilities = new MutableCapabilities();
-            mutableCapabilities.setCapability("browserName", browserName);
-            mutableCapabilities.setCapability("browserVersion", browserVersion);
-            return new RemoteWebDriver(new URL(remoteUrl), mutableCapabilities);
+            MutableCapabilities capabilities = new MutableCapabilities();
+            capabilities.setCapability("browserName", browserName);
+            capabilities.setCapability("browserVersion", browserVersion);
+
+            MutableCapabilities options;
+            switch (browserName.toLowerCase()) {
+                case "chrome" -> options = (ChromeOptions) new ChromeSettings().settings();
+                case "firefox" -> options = (FirefoxOptions) new FirefoxSettings().settings();
+                default -> throw new BrowserNotSupportedException(browserName);
+            }
+
+            capabilities.setCapability("selenoid:options", Map.of(
+                    "enableVNC", true,
+                    "enableVideo", false
+            ));
+            capabilities.merge(options);
+
+            return new RemoteWebDriver(new URL(remoteUrl), capabilities);
         }
         return switch (browserName.toLowerCase()) {
             case "chrome" -> new ChromeDriver((ChromeOptions) new ChromeSettings().settings());

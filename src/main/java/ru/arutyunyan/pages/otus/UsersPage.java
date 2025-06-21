@@ -107,13 +107,16 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
     @Step("Просмотр добавленного списка желания")
     public UsersPage viewWishList() {
-        if (waiters.isElementPresent(By.xpath("//*[@class='fade modal']"))) {
-            waiters.waitForElementVisible(modal);
-            waiters.waitForElementInVisible(modal);
+        try {
+            if (waiters.waitForElementVisible(modal, 2)) {
+                waiters.waitForElementInVisible(modal);
+            }
+        } catch (Exception ignored) {
         }
         buttonViewWishList.click();
         return this;
     }
+
 //    public UsersPage viewWishList() {
 //        waiters.waitForElementVisible(modal);
 //        waiters.waitForElementInVisible(modal);
