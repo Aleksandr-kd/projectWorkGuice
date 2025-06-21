@@ -67,7 +67,7 @@ jobs:
             -Dremote.url=http://localhost:4444/wd/hub
 
       - name: Check running containers
-        run: docker ps -av
+        run: docker ps
 
       - name: Print Selenoid logs
         run: docker logs selenoid
