@@ -133,7 +133,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
 
         while (!deleteButtons.isEmpty()) {
             try {
-                deleteButtons.getFirst().click();
+                deleteButtons.get(0).click();
 
                 new WebDriverWait(driver, Duration.ofSeconds(10))
                         .until(ExpectedConditions.stalenessOf(deleteButtons.get(0)));
