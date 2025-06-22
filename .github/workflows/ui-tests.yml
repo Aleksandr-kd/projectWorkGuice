@@ -76,9 +76,6 @@ jobs:
       - name: Check running containers
         run: docker ps -a
 
-      - name: Проверка Selenoid
-        run: curl -s http://selenoid:4444/status
-
       - name: Build project and run tests
         continue-on-error: true
         run: |
