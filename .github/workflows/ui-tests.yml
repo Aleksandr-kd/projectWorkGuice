@@ -36,7 +36,7 @@ jobs:
           sudo chmod 666 /var/run/docker.sock
           
           
-          docker pull aerokube/selenoid:1.13.0
+          docker pull aerokube/selenoid:latest
           docker pull selenoid/vnc_chrome:124.0
           docker pull aerokube/selenoid-ui:latest
           docker-compose up -d
