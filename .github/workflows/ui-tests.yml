@@ -65,7 +65,7 @@ jobs:
         run: |
             CONTAINER_ID=$(docker ps -q -f name=selenoid)
             if [ -n "$CONTAINER_ID" ]; then
-              docker exec $CONTAINER_ID selenoid -version
+              docker exec "$CONTAINER_ID" selenoid -version
             else
               echo "Selenoid container not found"
             fi
