@@ -36,7 +36,7 @@ jobs:
         run: |
           docker pull selenoid/vnc:firefox_124.0
 
-      - name: Setup Selenoid latest-release
+      - name: Setup Selenoid latest
         run: |
           docker-compose down -v || true
           docker system prune -f
