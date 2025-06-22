@@ -64,8 +64,7 @@ jobs:
             sleep 3
           done
 
-      - name: Проверка Selenoid
-        run: curl -s http://selenoid:4444/status
+
 
       - name: Install Allure CLI manually
         run: |
@@ -76,6 +75,9 @@ jobs:
 
       - name: Check running containers
         run: docker ps -a
+
+      - name: Проверка Selenoid
+        run: curl -s http://selenoid:4444/status
 
       - name: Build project and run tests
         continue-on-error: true
