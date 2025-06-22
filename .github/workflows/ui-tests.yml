@@ -61,14 +61,15 @@ jobs:
             docker-compose down
             docker-compose up -d
 
-      - name: Check Selenoid version
+      - name: Check Selenoid version from logs
         run: |
-            CONTAINER_ID=$(docker ps -q -f name=selenoid)
-            if [ -n "$CONTAINER_ID" ]; then
-              docker exec "$CONTAINER_ID" selenoid -version
-            else
-              echo "Selenoid container not found"
-            fi
+          CONTAINER_ID=$(docker ps -q -f name=selenoid)
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Selenoid version info from container logs:"
+            docker logs "$CONTAINER_ID" | grep version || echo "Version info not found in logs"
+          else
+            echo "Selenoid container not found"
+          fi
 
       - name: Check running containers
         run: docker ps -a
