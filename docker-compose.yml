@@ -13,7 +13,6 @@ services:
       "-limit", "4",
       "-timeout", "3m",
       "-retry-count", "1",
-      "-remove-captured-containers=false"
     ]
 
   selenoid-ui:
