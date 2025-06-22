@@ -9,7 +9,7 @@ services:
       - "4444:4444"
     volumes:
       - "./config:/etc/selenoid"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/var/run/docker.sock:/var/run/docker.sock:rw"
       - "/dev/shm:/dev/shm"
     command: [
       "-limit", "4",
@@ -19,7 +19,7 @@ services:
       "-video-output-dir", "/opt/selenoid/video"
     ]
     environment:
-      - DOCKER_API_VERSION=1.45
+      - DOCKER_API_VERSION=1.40
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
