@@ -24,12 +24,12 @@
 version: '3'
 networks:
   selenoid:
-    external:
       name: selenoid # This assumes network is already created
 services:
   selenoid:
     networks:
-      selenoid: null
+#      -bridge
+      - selenoid-net
     image: aerokube/selenoid:latest-release
     volumes:
       - "/path/to/config:/etc/selenoid"
