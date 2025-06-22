@@ -28,8 +28,7 @@ networks:
 services:
   selenoid:
     networks:
-#      -bridge
-      - selenoid-net
+      - bridge
     image: aerokube/selenoid:latest-release
     volumes:
       - "/path/to/config:/etc/selenoid"
@@ -44,7 +43,9 @@ services:
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest-release
-    network_mode: bridge
+#    network_mode: bridge
+    networks:
+      - bridge
     container_name: selenoid-ui
     ports:
       - "8080:8080"
