@@ -32,33 +32,38 @@ jobs:
         run: |
           docker pull selenoid/vnc:chrome_124.0
           docker pull selenoid/vnc:firefox_124.0
-      - name: Setup Selenoid latest
-        run: |
-          docker-compose down -v || true
-          docker system prune -f
-          docker rm -f $(docker ps -aq) || true
-          sudo chmod 666 /var/run/docker.sock
-          
           docker network create selenoid || true
-          
-          
-          
           docker pull aerokube/selenoid:latest
           docker pull aerokube/selenoid-ui:latest
           docker-compose up -d
-          
-          for i in {1..15}; do
-            if curl -s http://localhost:4444/status | grep -q "ready"; then
-              echo "Selenoid ready after $((i*3)) seconds"
-              docker logs selenoid | head -n 20
-              exit 0
-            fi
-            sleep 3
-          done
-          
-          echo "Selenoid failed to start"
-          docker logs selenoid
-          exit 1
+
+#      - name: Setup Selenoid latest
+#        run: |
+#          docker-compose down -v || true
+#          docker system prune -f
+#          docker rm -f $(docker ps -aq) || true
+#          sudo chmod 666 /var/run/docker.sock
+#
+#          docker network create selenoid || true
+#
+#
+#
+#          docker pull aerokube/selenoid:latest
+#          docker pull aerokube/selenoid-ui:latest
+#          docker-compose up -d
+#
+#          for i in {1..15}; do
+#            if curl -s http://localhost:4444/status | grep -q "ready"; then
+#              echo "Selenoid ready after $((i*3)) seconds"
+#              docker logs selenoid | head -n 20
+#              exit 0
+#            fi
+#            sleep 3
+#          done
+#
+#          echo "Selenoid failed to start"
+#          docker logs selenoid
+#          exit 1
 
       - name: Install Allure CLI manually
         run: |
