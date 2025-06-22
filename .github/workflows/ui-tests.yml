@@ -36,20 +36,21 @@ jobs:
           docker-compose down
           docker-compose up -d
 
-#      - name: Проверка версии селеноид
-#        run: docker exec -it selenoid /usr/bin/selenoid -version
+      - name: Проверка версии селеноид
+        run: docker exec selenoid /usr/bin/selenoid -version
 
       - name: Логи нового версии селеноид
         run: docker logs selenoid | head -n 10
 
       - name: Удаление и Установка нового версии селеноид
         run: |
+          docker rm -f 5aaaa838c21d
           docker rmi aerokube/selenoid:latest-release
           docker pull aerokube/selenoid:latest-release
           docker-compose up -d
 
-#      - name: Проверка версии селеноид
-#        run: docker exec -it selenoid /usr/bin/selenoid -version
+      - name: Проверка версии селеноид
+        run: docker exec selenoid /usr/bin/selenoid -version
 
       - name: Логи нового версии селеноид
         run: docker logs selenoid | head -n 10
