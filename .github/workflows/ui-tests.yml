@@ -28,11 +28,11 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
-      - name: Setup Selenoid 1.13.0
+      - name: Setup Selenoid 1.10.7
         run: |
           docker-compose down || true
           docker rm -f $(docker ps -aq) || true
-          docker pull aerokube/selenoid:1.13.0
+          docker pull aerokube/selenoid:1.10.7
           docker pull selenoid/vnc_chrome:124.0
           docker-compose up -d
           
