@@ -1,7 +1,7 @@
 version: '3'
 services:
   selenoid:
-    image: aerokube/selenoid
+    image: aerokube/selenoid:1.45
     container_name: selenoid
     restart: always
     network_mode: bridge
