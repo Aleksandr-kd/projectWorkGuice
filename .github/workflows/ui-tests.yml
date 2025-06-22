@@ -29,10 +29,12 @@ jobs:
           sudo chmod +x "$TARGET_PATH"
 
       - name: Pull Selenoid Chrome image
-        run: docker pull selenoid/vnc:chrome_124.0
+        run: |
+          docker pull selenoid/vnc:chrome_124.0
 
       - name: Pull Selenoid Firefox image
-        run: docker pull selenoid/vnc:firefox_124.0
+        run: |
+          docker pull selenoid/vnc:firefox_124.0
 
       - name: Setup Selenoid latest-release
         run: |
