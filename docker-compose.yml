@@ -1,7 +1,7 @@
 #version: '3'
 services:
   selenoid:
-    image: aerokube/selenoid:latest-release
+    image: aerokube/selenoid:latest
     container_name: selenoid
     restart: always
     network_mode: bridge
@@ -18,8 +18,8 @@ services:
       "-conf", "/etc/selenoid/browsers.json",
       "-video-output-dir", "/opt/selenoid/video"
     ]
-    environment:
-      - DOCKER_API_VERSION=1.40
+#    environment:
+#      - DOCKER_API_VERSION=1.40
 
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
