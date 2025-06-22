@@ -39,7 +39,7 @@ jobs:
           
           
           
-          docker pull aerokube/selenoid:latest-release
+          docker pull aerokube/selenoid:latest
           docker pull selenoid/vnc_chrome:124.0
           docker pull aerokube/selenoid-ui:latest
           docker-compose up -d

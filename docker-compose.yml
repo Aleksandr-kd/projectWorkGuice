@@ -1,6 +1,7 @@
 version: "3"
 services:
   selenoid:
+    container_name: selenoid
     image: aerokube/selenoid:latest
     command: ["-conf", "/etc/selenoid/browsers.json", "-limit", "10"]
     ports:
