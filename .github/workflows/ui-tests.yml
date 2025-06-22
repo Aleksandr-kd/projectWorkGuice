@@ -75,14 +75,6 @@ jobs:
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Проверка содержимого /etc/selenoid внутри контейнера
-        run: |
-          echo "--- Список файлов ---"
-          docker exec selenoid ls -la /etc/selenoid
-          
-          echo "--- Содержимое browsers.json ---"
-          docker exec selenoid cat /etc/selenoid/browsers.json
-
       - name: Build project and run tests
         continue-on-error: true
         run: |
@@ -92,14 +84,6 @@ jobs:
             -DbrowserVersion=124.0 \
             -Dmode=fullscreen \
             -Dremote.url=http://localhost:4444/
-
-#      - name: Проверка содержимого /etc/selenoid внутри контейнера
-#        run: |
-#            echo "--- Список файлов ---"
-#            docker exec selenoid ls -la /etc/selenoid
-#
-#            echo "--- Содержимое browsers.json ---"
-#            docker exec selenoid cat /etc/selenoid/browsers.json
 
       - name: Collect Selenoid logs
         if: always()

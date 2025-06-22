@@ -7,8 +7,8 @@ services:
     ports:
       - "4444:4444"
     volumes:
-      - "./config:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./config:/etc/selenoid"
     networks:
       - selenoid-net
 
@@ -22,20 +22,6 @@ services:
       - selenoid
     networks:
       - selenoid-net
-
-#  chrome:
-#    image: selenoid/vnc:chrome_124.0
-#    networks:
-#      - selenoid-net
-#    entrypoint: ["/bin/sh", "-c"]
-#    command: ["echo 'Browser container ready' && tail -f /dev/null"]
-#
-#  firefox:
-#    image: selenoid/vnc:firefox_124.0
-#    networks:
-#      - selenoid-net
-#    entrypoint: ["/bin/sh", "-c"]
-#    command: ["echo 'Browser container ready' && tail -f /dev/null"]
 
 networks:
   selenoid-net:
