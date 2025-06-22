@@ -12,7 +12,7 @@ services:
     command: [
       "-limit", "4",
       "-timeout", "3m",
-      "-retry-count", "1"
+      "-retry-count", "1",
       "-remove-captured-containers=false"
     ]
 
