@@ -69,6 +69,9 @@ jobs:
             echo "Image aerokube/selenoid:latest-release not found"
           fi
 
+      - name: Pull latest Selenoid image
+        run: docker pull aerokube/selenoid:latest-release
+
       - name: Проверка версии селеноид
         run: docker exec selenoid /usr/bin/selenoid -version
 
