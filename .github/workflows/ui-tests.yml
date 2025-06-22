@@ -28,15 +28,19 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
-      - name: Pull latest Selenoid image
-        run: docker pull aerokube/selenoid:latest-release
-
       - name: Restart Selenoid
         run: |
           docker-compose down
           docker system prune -a -f
-          docker-compose up -d
 
+      - name: Pull latest Selenoid image
+        run: docker pull aerokube/selenoid:latest-release
+
+
+      - name: Restart Selenoid
+        run: |
+          docker-compose down
+          docker-compose up -d
 
       - name: Проверка версии селеноид
         run: docker exec selenoid /usr/bin/selenoid -version
