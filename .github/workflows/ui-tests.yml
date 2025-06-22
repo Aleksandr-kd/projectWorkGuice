@@ -41,17 +41,32 @@ jobs:
           echo "Firefox container not found"
           fi
 
+#      - name: Pull browser image for Selenoid
+#        run: docker pull selenoid/vnc:firefox_124.0
+#
+#      - name: Pull browser image for Selenoid
+#        run: docker pull selenoid/vnc_firefox:124.0
+
       - name: Pull browser image for Selenoid
-        run: docker pull selenoid/vnc:firefox_124.0
+        run: docker pull selenoid/vnc:chrome_124.0
+
+      - name: Pull browser image for Selenoid
+        run: docker pull selenoid/vnc_chrome:124.0
+
+#      - name: Check that browser image is pulled
+#        run: docker images | grep firefox
+
+      - name: Check that browser image is pulled
+        run: docker images | grep chrome
+
+      - name: Check that browser image is pulled
+        run: docker images | grep selenoid/vnc
 
       - name: Start Selenoid
         run: docker-compose up -d
 
       - name: Check running containers
         run: docker ps -a
-
-      - name: Check that browser image is pulled
-        run: docker images | grep firefox
 
       - name: Wait for Selenoid to be ready
         run: |
@@ -115,3 +130,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./allure-report
+          publish_branch: gh-pages
