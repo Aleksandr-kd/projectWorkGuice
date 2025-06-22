@@ -33,6 +33,8 @@ jobs:
           docker-compose down -v || true
           docker system prune -f
           docker rm -f $(docker ps -aq) || true
+          sudo chmod 666 /var/run/docker.sock
+          
           
           docker pull aerokube/selenoid:1.10.7
           docker pull selenoid/vnc_chrome:124.0
