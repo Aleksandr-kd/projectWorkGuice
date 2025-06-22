@@ -31,15 +31,15 @@ jobs:
       - name: Show all containers (including failed)
         run: docker ps -a
 
-      - name: Show logs of latest Firefox container
-        run: |
-          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
-          if [ -n "$CID" ]; then
-            echo "Firefox container logs:"
-            docker logs $CID
-          else
-          echo "Firefox container not found"
-          fi
+#      - name: Show logs of latest Firefox container
+#        run: |
+#          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
+#          if [ -n "$CID" ]; then
+#            echo "Firefox container logs:"
+#            docker logs $CID
+#          else
+#          echo "Firefox container not found"
+#          fi
 
 #      - name: Pull browser image for Selenoid
 #        run: docker pull selenoid/vnc:firefox_124.0
@@ -73,7 +73,24 @@ jobs:
             sleep 3
           done
 
+      #      - name: Show logs of Firefox container (if exists)
+      #        run: |
+      #          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
+      #          if [ -n "$CID" ]; then
+      #            echo "Firefox container logs:"
+      #            docker logs $CID
+      #          else
+      #            echo "Firefox container not found"
+      #          fi
 
+      - name: Log chrome container (если существует)
+        run: |
+          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:chrome_124.0" -q | head -n1)
+          if [ -n "$CID" ]; then
+            docker logs $CID
+          else
+            echo "Chrome container not found"
+          fi
 
       - name: Install Allure CLI manually
         run: |
@@ -100,25 +117,6 @@ jobs:
 
       - name: Show Selenoid logs
         run: docker logs selenoid
-
-#      - name: Show logs of Firefox container (if exists)
-#        run: |
-#          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
-#          if [ -n "$CID" ]; then
-#            echo "Firefox container logs:"
-#            docker logs $CID
-#          else
-#            echo "Firefox container not found"
-#          fi
-
-      - name: Log chrome container (если существует)
-        run: |
-          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:chrome_124.0" -q | head -n1)
-          if [ -n "$CID" ]; then
-            docker logs $CID
-          else
-            echo "Chrome container not found"
-          fi
 
       - name: Generate Allure Report
         run: |

@@ -4,21 +4,25 @@ services:
     image: aerokube/selenoid:latest-release
     container_name: selenoid
     restart: always
+    network_mode: bridge
     ports:
       - "4444:4444"
     volumes:
       - "./config:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
+      - "/dev/shm:/dev/shm"
     command: [
       "-limit", "4",
       "-timeout", "3m",
       "-retry-count", "1",
+      "-conf", "/etc/selenoid/browsers.json",
+      "-video-output-dir", "/opt/selenoid/video
     ]
 
   selenoid-ui:
     image: aerokube/selenoid-ui
+    network_mode: bridge
     container_name: selenoid-ui
-    restart: always
     ports:
       - "8080:8080"
     links:
