@@ -34,7 +34,7 @@ jobs:
           docker system prune -a -f
 
       - name: Pull latest Selenoid image
-        run: docker pull aerokube/selenoid:latest-release
+        run: docker pull aerokube/selenoid
 
 
       - name: Restart Selenoid
