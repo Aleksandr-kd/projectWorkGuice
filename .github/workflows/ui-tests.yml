@@ -35,6 +35,7 @@ jobs:
           docker network create selenoid || true
           docker pull aerokube/selenoid:latest
           docker pull aerokube/selenoid-ui:latest
+          docker images | grep selenoid
           docker-compose up -d
 
 #      - name: Setup Selenoid latest
