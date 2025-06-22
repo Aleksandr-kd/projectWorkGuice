@@ -40,6 +40,11 @@ jobs:
           docker images | grep selenoid
           docker-compose up -d
 
+      - name: перечисление контейнеров после композ
+        run: |
+          echo "Список контейнеров сразу после запуска Selenoid:"
+          docker ps -a
+
 #      - name: Setup Selenoid latest
 #        run: |
 #          docker-compose down -v || true
@@ -84,6 +89,11 @@ jobs:
             -DbrowserVersion=124.0 \
             -Dmode=headless \
             -Dremote.url=http://localhost:4444/
+
+      - name: Build project and run tests
+        run:
+          echo "Список контейнеров сразу после запуска Selenoid:"
+          docker ps -a
 
       - name: Collect Selenoid logs
         if: always()
