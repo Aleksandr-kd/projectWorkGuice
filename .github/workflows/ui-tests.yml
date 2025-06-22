@@ -28,12 +28,9 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
-      - name: Pull Selenoid Chrome image
+      - name: Pull Selenoid browser images
         run: |
           docker pull selenoid/vnc:chrome_124.0
-
-      - name: Pull Selenoid Firefox image
-        run: |
           docker pull selenoid/vnc:firefox_124.0
       - name: Setup Selenoid latest
         run: |
