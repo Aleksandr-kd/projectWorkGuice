@@ -28,6 +28,19 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
+      - name: Show all containers (including failed)
+        run: docker ps -a
+
+      - name: Show logs of latest Firefox container
+        run: |
+          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:firefox_124.0" -q | head -n1)
+          if [ -n "$CID" ]; then
+            echo "Firefox container logs:"
+            docker logs $CID
+          else
+          echo "Firefox container not found"
+          fi
+
       - name: Pull browser image for Selenoid
         run: docker pull selenoid/vnc:firefox_124.0
 
@@ -65,7 +78,7 @@ jobs:
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=firefox \
+            -Dbrowser=chrome \
             -DbrowserVersion=124.0 \
             -Dmode=fullscreen \
             -Dremote.url=http://localhost:4444/wd/hub
