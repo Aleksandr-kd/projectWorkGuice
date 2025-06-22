@@ -82,7 +82,7 @@ jobs:
             -Dgroups=test \
             -Dbrowser=chrome \
             -DbrowserVersion=124.0 \
-            -Dmode=fullscreen \
+            -Dmode=headless \
             -Dremote.url=http://localhost:4444/
 
       - name: Collect Selenoid logs
