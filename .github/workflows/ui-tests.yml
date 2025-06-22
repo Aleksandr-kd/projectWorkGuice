@@ -110,7 +110,7 @@ jobs:
             -Dbrowser=chrome \
             -DbrowserVersion=124.0 \
             -Dmode=fullscreen \
-            -Dremote.url=http://localhost:4444/wd/hub
+            -Dremote.url=http://localhost:4444/
 
       - name: Show running containers
         run: docker ps -a
