@@ -5,7 +5,7 @@
       "124.0": {
         "image": "selenoid/vnc:chrome_124.0",
         "port": "4444",
-        "path": "/wd/hub",
+        "path": "/",
         "env": ["TZ=UTC"],
         "tmpfs": {"/tmp": "size=512m"},
         "volumes": ["/dev/shm:/dev/shm"]

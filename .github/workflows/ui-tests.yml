@@ -53,9 +53,6 @@ jobs:
       - name: Check that browser image is pulled
         run: docker images | grep chrome
 
-      - name: Check that browser image is pulled
-        run: docker images | grep selenoid/vnc
-
       - name: Start Selenoid
         run: docker-compose up -d
 
