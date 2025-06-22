@@ -63,7 +63,7 @@ jobs:
 
       - name: Check Selenoid version
         run: |
-            CONTAINER_ID=$(docker ps -q -f ancestor=aerokube/selenoid)
+            CONTAINER_ID=$(docker ps -q -f name=selenoid)
             if [ -n "$CONTAINER_ID" ]; then
               docker exec $CONTAINER_ID selenoid -version
             else
