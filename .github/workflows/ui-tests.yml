@@ -28,7 +28,7 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
-      - name: Setup Selenoid 1.13.0
+      - name: Setup Selenoid latest-release
         run: |
           docker-compose down -v || true
           docker system prune -f
@@ -36,7 +36,7 @@ jobs:
           sudo chmod 666 /var/run/docker.sock
           
           
-          docker pull aerokube/selenoid:latest
+          docker pull aerokube/selenoid:latest-release
           docker pull selenoid/vnc_chrome:124.0
           docker pull aerokube/selenoid-ui:latest
           docker-compose up -d

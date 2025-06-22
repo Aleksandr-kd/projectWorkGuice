@@ -1,7 +1,7 @@
 #version: '3'
 services:
   selenoid:
-    image: aerokube/selenoid:latest
+    image: aerokube/selenoid:latest-release
     container_name: selenoid
     restart: always
     network_mode: bridge
@@ -22,7 +22,7 @@ services:
 #      - DOCKER_API_VERSION=1.40
 
   selenoid-ui:
-    image: aerokube/selenoid-ui:latest
+    image: aerokube/selenoid-ui:latest-release
     network_mode: bridge
     container_name: selenoid-ui
     ports:
