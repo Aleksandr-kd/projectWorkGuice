@@ -30,10 +30,13 @@ jobs:
 
       - name: Setup Selenoid 1.10.7
         run: |
-          docker-compose down || true
+          docker-compose down -v || true
+          docker system prune -f
           docker rm -f $(docker ps -aq) || true
+          
           docker pull aerokube/selenoid:1.10.7
           docker pull selenoid/vnc_chrome:124.0
+          docker pull aerokube/selenoid-ui:latest
           docker-compose up -d
           
           for i in {1..15}; do
@@ -44,6 +47,7 @@ jobs:
             fi
             sleep 3
           done
+          
           echo "Selenoid failed to start"
           docker logs selenoid
           exit 1
