@@ -5,7 +5,7 @@ services:
     image: aerokube/selenoid:latest
     command: ["-conf", "/etc/selenoid/browsers.json", "-limit", "10"]
     ports:
-      - "4444:4444"  # Основной порт Selenoid
+      - "4444:4444"
     volumes:
       - "./config:/etc/selenoid"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -23,19 +23,19 @@ services:
     networks:
       - selenoid-net
 
-  chrome:
-    image: selenoid/vnc:chrome_124.0
-    networks:
-      - selenoid-net
-    entrypoint: ["/bin/sh", "-c"]
-    command: ["echo 'Browser container ready' && tail -f /dev/null"]
-
-  firefox:
-    image: selenoid/vnc:firefox_124.0
-    networks:
-      - selenoid-net
-    entrypoint: ["/bin/sh", "-c"]
-    command: ["echo 'Browser container ready' && tail -f /dev/null"]
+#  chrome:
+#    image: selenoid/vnc:chrome_124.0
+#    networks:
+#      - selenoid-net
+#    entrypoint: ["/bin/sh", "-c"]
+#    command: ["echo 'Browser container ready' && tail -f /dev/null"]
+#
+#  firefox:
+#    image: selenoid/vnc:firefox_124.0
+#    networks:
+#      - selenoid-net
+#    entrypoint: ["/bin/sh", "-c"]
+#    command: ["echo 'Browser container ready' && tail -f /dev/null"]
 
 networks:
   selenoid-net:

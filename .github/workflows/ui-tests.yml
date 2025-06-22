@@ -28,6 +28,12 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
+      - name: Pull Selenoid Chrome image
+        run: docker pull selenoid/vnc:chrome_124.0
+
+      - name: Pull Selenoid Firefox image
+        run: docker pull selenoid/vnc:firefox_124.0
+
       - name: Setup Selenoid latest-release
         run: |
           docker-compose down -v || true
@@ -40,7 +46,7 @@ jobs:
           
           
           docker pull aerokube/selenoid:latest
-          docker pull selenoid/vnc_chrome:124.0
+#          docker pull selenoid/vnc_chrome:124.0
           docker pull aerokube/selenoid-ui:latest
           docker-compose up -d
           
