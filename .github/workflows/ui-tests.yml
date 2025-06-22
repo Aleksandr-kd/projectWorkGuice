@@ -30,6 +30,8 @@ jobs:
 
       - name: Pull Selenoid browser images
         run: |
+          docker-compose down -v
+          docker system prune -f
           docker pull selenoid/vnc:chrome_124.0
           docker pull selenoid/vnc:firefox_124.0
           docker network create selenoid || true
