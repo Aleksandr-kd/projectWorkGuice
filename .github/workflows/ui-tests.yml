@@ -42,12 +42,32 @@ jobs:
       - name: Логи нового версии селеноид
         run: docker logs selenoid | head -n 10
 
-      - name: Удаление и Установка нового версии селеноид
+#      - name: Удаление и Установка нового версии селеноид
+#        run: |
+#          docker rm -f 5aaaa838c21d
+#          docker rmi aerokube/selenoid:latest-release
+#          docker pull aerokube/selenoid:latest-release
+#          docker-compose up -d
+
+      - name: Stop and remove all containers using aerokube/selenoid image
         run: |
-          docker rm -f 5aaaa838c21d
-          docker rmi aerokube/selenoid:latest-release
-          docker pull aerokube/selenoid:latest-release
-          docker-compose up -d
+          CONTAINERS=$(docker ps -aq --filter ancestor=aerokube/selenoid:latest-release)
+          if [ -n "$CONTAINERS" ]; then
+            docker rm -f $CONTAINERS
+            echo "Stopped and removed containers: $CONTAINERS"
+          else
+            echo "No containers found using aerokube/selenoid image"
+          fi
+
+      - name: Remove aerokube/selenoid image
+        run: |
+          IMAGE_ID=$(docker images -q aerokube/selenoid:latest-release)
+          if [ -n "$IMAGE_ID" ]; then
+            docker rmi $IMAGE_ID
+            echo "Removed image aerokube/selenoid:latest-release"
+          else
+            echo "Image aerokube/selenoid:latest-release not found"
+          fi
 
       - name: Проверка версии селеноид
         run: docker exec selenoid /usr/bin/selenoid -version
