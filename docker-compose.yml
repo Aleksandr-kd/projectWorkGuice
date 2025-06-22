@@ -4,7 +4,7 @@ services:
     image: aerokube/selenoid:1.13.0
     container_name: selenoid
     restart: always
-    network_mode: bridge
+#    network_mode: bridge
     ports:
       - "4444:4444"
     volumes:

@@ -28,25 +28,43 @@ jobs:
           sudo curl -L "$DOWNLOAD_URL" -o "$TARGET_PATH"
           sudo chmod +x "$TARGET_PATH"
 
-      - name: Restart Selenoid
+#      - name: Restart Selenoid
+#        run: |
+#          docker-compose down
+#          docker system prune -a -f
+#
+#      - name: Pull latest Selenoid image
+#        run: docker pull aerokube/selenoid:1.13.0
+
+
+#      - name: Restart Selenoid
+#        run: |
+#          docker-compose down
+#          docker-compose up -d
+#
+#      - name: Проверка версии селеноид
+#        run: docker exec selenoid /usr/bin/selenoid -version
+#
+#      - name: Логи нового версии селеноид
+#        run: docker logs selenoid | head -n 10
+
+      - name: Setup Selenoid 1.13.0
         run: |
-          docker-compose down
-          docker system prune -a -f
-
-      - name: Pull latest Selenoid image
-        run: docker pull aerokube/selenoid:1.13.0
-
-
-      - name: Restart Selenoid
-        run: |
-          docker-compose down
+          docker-compose down || true
+          docker pull aerokube/selenoid:1.13.0
+          docker pull selenoid/vnc_chrome:124.0
           docker-compose up -d
-
-      - name: Проверка версии селеноид
-        run: docker exec selenoid /usr/bin/selenoid -version
-
-      - name: Логи нового версии селеноид
-        run: docker logs selenoid | head -n 10
+#          sleep 10
+          for i in {1..10}; do
+          if curl -s http://localhost:4444/status | grep -q "ready"; then
+          echo "Selenoid is ready"
+          break
+            fi
+          echo "Waiting for Selenoid..."
+          sleep 3
+          done  
+          docker ps
+#          curl http://localhost:4444/status
 
 #      - name: Удаление и Установка нового версии селеноид
 #        run: |
@@ -91,8 +109,8 @@ jobs:
 
 
 
-      - name: Show all containers (including failed)
-        run: docker ps -a
+#      - name: Show all containers (including failed)
+#        run: docker ps -a
 
       #      - name: Show logs of latest Firefox container
       #        run: |
@@ -107,38 +125,38 @@ jobs:
       #      - name: Pull browser image for Selenoid
       #        run: docker pull selenoid/vnc:firefox_124.0
 
-      - name: Pull browser image for Selenoid
-        run: docker pull selenoid/vnc:chrome_124.0
+#      - name: Pull browser image for Selenoid
+#        run: docker pull selenoid/vnc:chrome_124.0
 
       #      - name: Check that browser image is pulled
       #        run: docker images | grep firefox
 
-      - name: Check that browser image is pulled
-        run: docker images | grep chrome
+#      - name: Check that browser image is pulled
+#        run: docker images | grep chrome
+#
+#      - name: Check Selenoid version from logs
+#        run: |
+#          CONTAINER_ID=$(docker ps -q -f name=selenoid)
+#          if [ -n "$CONTAINER_ID" ]; then
+#            echo "Selenoid version info from container logs:"
+#            docker logs "$CONTAINER_ID" | grep version || echo "Version info not found in logs"
+#          else
+#            echo "Selenoid container not found"
+#          fi
+#
+#      - name: Check running containers
+#        run: docker ps -a
 
-      - name: Check Selenoid version from logs
-        run: |
-          CONTAINER_ID=$(docker ps -q -f name=selenoid)
-          if [ -n "$CONTAINER_ID" ]; then
-            echo "Selenoid version info from container logs:"
-            docker logs "$CONTAINER_ID" | grep version || echo "Version info not found in logs"
-          else
-            echo "Selenoid container not found"
-          fi
-
-      - name: Check running containers
-        run: docker ps -a
-
-      - name: Wait for Selenoid to be ready
-        run: |
-          for i in {1..10}; do
-            if curl -s http://localhost:4444/status | grep -q "ready"; then
-              echo "Selenoid is ready"
-              break
-            fi
-            echo "Waiting for Selenoid..."
-            sleep 3
-          done
+#      - name: Wait for Selenoid to be ready
+#        run: |
+#          for i in {1..10}; do
+#            if curl -s http://localhost:4444/status | grep -q "ready"; then
+#              echo "Selenoid is ready"
+#              break
+#            fi
+#            echo "Waiting for Selenoid..."
+#            sleep 3
+#          done
 
       #      - name: Show logs of Firefox container (if exists)
       #        run: |
@@ -150,14 +168,14 @@ jobs:
       #            echo "Firefox container not found"
       #          fi
 
-      - name: Log chrome container (если существует)
-        run: |
-          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:chrome_124.0" -q | head -n1)
-          if [ -n "$CID" ]; then
-            docker logs $CID
-          else
-            echo "Chrome container not found"
-          fi
+#      - name: Log chrome container (если существует)
+#        run: |
+#          CID=$(docker ps -a --filter "ancestor=selenoid/vnc:chrome_124.0" -q | head -n1)
+#          if [ -n "$CID" ]; then
+#            docker logs $CID
+#          else
+#            echo "Chrome container not found"
+#          fi
 
       - name: Install Allure CLI manually
         run: |
@@ -178,12 +196,6 @@ jobs:
             -DbrowserVersion=124.0 \
             -Dmode=fullscreen \
             -Dremote.url=http://localhost:4444/
-
-      - name: Show running containers
-        run: docker ps -a
-
-      - name: Show Selenoid logs
-        run: docker logs selenoid
 
       - name: Generate Allure Report
         run: |
