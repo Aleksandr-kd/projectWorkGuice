@@ -63,7 +63,10 @@ jobs:
             echo "Waiting for Selenoid..."
             sleep 3
           done
-          
+
+      - name: Проверка Selenoid
+        run: curl -s http://selenoid:4444/status
+
       - name: Install Allure CLI manually
         run: |
           wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
