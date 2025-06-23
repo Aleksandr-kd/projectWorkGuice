@@ -43,7 +43,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @FindBy(xpath = "//label[text()='Описание (необязательно)']/following-sibling::textarea")
     private WebElement descriptionPresent;
 
-    @FindBy(xpath = "//div[@class='mt-5 container']//h2")
+    @FindBy(xpath = "//div[@clas s='mt-5 container']//h2")
     private WebElement nameWishList;
 
     @FindBy(xpath = "//div[@class='g-4 row row-cols-lg-3 row-cols-md-2 row-cols-1']/*[last()]" +
@@ -194,7 +194,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @Step("Проверка, что отсутствует подарок с названием")
     public void nameWishListShouldNotBeDisplayed(WishList wishList) {
         assertThat(getNameWishList())
-                .as("Э лемент с названием %s не найден", wishList.getProductName())
+                .as("Элемент с названием %s не найден", wishList.getProductName())
                 .isEqualTo(wishList.getProductName());
     }
 }
