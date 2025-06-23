@@ -31,7 +31,7 @@ jobs:
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=chrome \
+            -Dbrowser=firefox \
             -Dmode=headless
         continue-on-error: true
 
@@ -59,3 +59,15 @@ jobs:
           github_token: ${{ secrets.PAT_TOKEN }}
           publish_dir: ./allure-report
           publish_branch: gh-pages
+
+      - name: Download previous Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: $RESULTS_DIR/history
+
+      - name: Save Allure history
+        if: always()
+        run: |
+          mkdir -p $RESULTS_DIR/history
+          cp -r $REPORT_DIR/history $RESULTS_DIR/ || true
