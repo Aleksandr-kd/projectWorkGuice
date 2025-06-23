@@ -1,8 +1,9 @@
 package ru.arutyunyan.dto;
 
-import com.github.javafaker.Faker;
 import lombok.Getter;
 import lombok.ToString;
+import net.datafaker.Faker;
+
 import java.util.Locale;
 
 

@@ -27,16 +27,18 @@
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <selenium-java.version>4.22.0</selenium-java.version>
         <slf4j-api.version>2.0.15</slf4j-api.version>
+
         <allure-junit5.version>2.29.1</allure-junit5.version>
         <allure.version>2.29.1</allure.version>
         <allure-maven.version>2.15.2</allure-maven.version>
-        <allure-report.version>2.30.0</allure-report.version>
+        <allure-report.version>2.29.1</allure-report.version>
+
         <aspectj.version>1.9.22</aspectj.version>
         <assertj-core.version>3.26.3</assertj-core.version>
-        <spring-boot.version>3.4.5</spring-boot.version>
         <spring-context.version>5.3.30</spring-context.version>
+        <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
         <lombok.version>1.18.38</lombok.version>
-        <javafaker.version>1.0.2</javafaker.version>
+        <javafaker.version>2.3.0</javafaker.version>
         <guice.version>7.0.0</guice.version>
 
         <base.url>https://wishlist.otus.kartushin.su</base.url>
@@ -69,14 +71,9 @@
             <version>${allure-junit5.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.github.javafaker</groupId>
-            <artifactId>javafaker</artifactId>
-            <version>${javafaker.version}</version>
-        </dependency>
-        <dependency>
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
-            <version>2.3.0</version>
+            <version>${javafaker.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -87,6 +84,16 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
         </dependency>
     </dependencies>
 
@@ -123,11 +130,11 @@
                             <value>io.qameta.allure.junit5.AllureJunit5</value>
                         </property>
                         <configurationParameters>
-                            junit.jupiter.execution.parallel.enabled=false
+                            junit.jupiter.execution.parallel.enabled=true
                             junit.jupiter.execution.parallel.mode.default=concurrent
                             junit.jupiter.execution.parallel.mode.classes.default=concurrent
                             junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=1
+                            junit.jupiter.execution.parallel.config.fixed.parallelism=2
                         </configurationParameters>
                     </properties>
 
@@ -144,34 +151,16 @@
                     </systemPropertyVariables>
 
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>io.qameta.allure</groupId>
-                        <artifactId>allure-junit5</artifactId>
-                        <version>${allure.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
-
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
                 <version>${allure-maven.version}</version>
                 <configuration>
-                    <reportVersion>${allure-report.version}</reportVersion>
+                    <reportVersion>${allure.version}</reportVersion>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
                     <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>

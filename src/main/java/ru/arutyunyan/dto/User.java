@@ -1,9 +1,9 @@
 package ru.arutyunyan.dto;
 
-import com.github.javafaker.Faker;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import net.datafaker.Faker;
 
 
 @ToString

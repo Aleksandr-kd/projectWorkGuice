@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  BROWSER: "firefox"
+  BROWSER: "chrome"
 
 jobs:
   ui-tests:
@@ -45,9 +45,23 @@ jobs:
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Generate Allure Report
+#      - name: Generate Allure Report
+#        run: |
+#          allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
+      - name: Generate Allure report
+        if: always()
         run: |
-          allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
+          allure generate \
+            --clean \
+            --report-dir allure-report \
+            --ignore-retries \
+            target/allure-results
+
+      - name: Analyze flaky tests
+        run: |
+          allure generate --clean --report-dir allure-report \
+          --ignore-retries \
+          target/allure-results
 
       - name: Upload Allure Report as artifact
         uses: actions/upload-artifact@v4
