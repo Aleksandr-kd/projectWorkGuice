@@ -27,18 +27,11 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
 
-      - name: Реальный браузер
-        run: |
-                echo "🔍 Chrome версия:"
-                google-chrome --version || echo "Chrome не установлен"
-                echo "🦊 Firefox версия:"
-                firefox --version || echo "Firefox не установлен"
-
       - name: Run tests
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=firefox \
+            -Dbrowser=chrome \
             -Dmode=headless
         continue-on-error: true
 
