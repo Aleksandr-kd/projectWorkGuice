@@ -49,11 +49,11 @@ jobs:
         run: |
           sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html
 
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: allure-report
+#      - name: Upload Allure Report
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: allure-report
+#          path: allure-report
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
