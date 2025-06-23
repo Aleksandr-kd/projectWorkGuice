@@ -107,10 +107,15 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
                 + "\npassword = " + user.getPassword());
 
         waiters.waitForPageLoad();
+        waiters.waitAndClick(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
+
+        waiters.waitAndClick(inputEmail);
         inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
+
+        waiters.waitAndClick(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
@@ -159,13 +164,14 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
         waiters.waitForPageLoad();
-//        waiters.waitForElementVisible(inputName);
+
+        waiters.waitAndClick(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
-//        waiters.waitForElementVisible(inputPassword);
+
+        waiters.waitAndClick(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
-//        waiters.waitForElementVisible(buttonLogin);
 
         clickButtonLogin();
 

@@ -19,7 +19,9 @@ public class ChromeSettings implements IBrowserSettings {
                     .addArguments("--window-size=1920,1080")
                     .addArguments("--disable-gpu")
                     .addArguments("--no-sandbox")
-                    .addArguments("--disable-dev-shm-usage");
+                    .addArguments("--disable-dev-shm-usage")
+                    .addArguments("--ignore-certificate-errors")
+                    .addArguments("--allow-insecure-localhost");
             case FULLSCREEN -> options.addArguments("--start-maximized");
             case KIOSK -> options.addArguments("--kiosk");
         };
