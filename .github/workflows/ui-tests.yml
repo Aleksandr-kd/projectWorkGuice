@@ -12,14 +12,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
           java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Chrome and Firefox
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Run tests
+        run: |
+          mvn clean test \
+            -Dbrowser=chrome \
+            -Dmode=headless
 
       - name: Install Allure CLI
         run: |
@@ -28,32 +37,11 @@ jobs:
           sudo mv allure-2.34.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Start Selenoid via Docker Compose
-        run: |
-          docker-compose -f docker-compose.yml down -v || true
-          docker-compose -f docker-compose.yml up -d
-          docker ps -a
-
-      - name: Run tests
-        continue-on-error: true
-        run: |
-          mvn clean test \
-            -Dgroups=test \
-            -Dbrowser=chrome \
-            -DbrowserVersion=124.0 \
-            -Dmode=headless \
-            -Dremote.url=http://localhost:4444/wd/hub
-
-      - name: Print Selenoid logs
-        if: always()
-        run: |
-          docker logs selenoid || true
-
       - name: Generate Allure Report
         run: |
           allure generate target/allure-results --clean -o allure-report
 
-      - name: Patch base href in Allure report
+      - name: Fix index.html base href
         run: |
           sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html
 
