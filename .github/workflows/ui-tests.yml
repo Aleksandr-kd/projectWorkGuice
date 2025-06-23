@@ -7,6 +7,9 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+env:
+  BROWSER: "firefox"
+
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
@@ -31,7 +34,7 @@ jobs:
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=firefox \
+            -Dbrowser=$BROWSER \
             -Dmode=headless
         continue-on-error: true
 
