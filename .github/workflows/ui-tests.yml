@@ -130,7 +130,7 @@ jobs:
             echo "Retrying failed tests: $TESTS"
             mvn -Dtest="$TESTS" test \
               -Dgroups=test \
-              -Dbrowser=$BROWSER \90
+              -Dbrowser=$BROWSER \
               -Dmode=headless
           else
             echo "No failed tests to retry."
