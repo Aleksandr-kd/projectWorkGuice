@@ -26,6 +26,10 @@ public class ChromeSettings implements IBrowserSettings {
         switch (modeData) {
             case HEADLESS:
                 options.addArguments("--headless=new");
+                options.addArguments("--window-size=1920,1080");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
                 return options;
             case FULLSCREEN:
                 return options.addArguments("--start-maximized");
