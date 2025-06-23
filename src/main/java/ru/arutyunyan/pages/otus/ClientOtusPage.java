@@ -26,7 +26,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @FindBy(xpath = "//h2[text()='Вход в систему']")
     private WebElement getButtonLogin;
 
-    @FindBy(xpath = "//button[text()='Войти']")
+    @FindBy(xpath = "//button[@type='submit']")
     private WebElement buttonLogin;
 
     @FindBy(xpath = "//h2[text()='Регистрация']")
