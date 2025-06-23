@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  BROWSER: "opera"
+  BROWSER: "chrome"
 
 jobs:
   ui-tests:
