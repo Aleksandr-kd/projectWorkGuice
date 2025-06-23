@@ -27,8 +27,8 @@ jobs:
       - name: Check site availability
         run: curl -I https://wishlist.otus.kartushin.su/register || true
 
-#      - name: Set up Chrome
-#        uses: browser-actions/setup-chrome@latest
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@latest
 
       - name: Run tests (1st try)
         id: first-run

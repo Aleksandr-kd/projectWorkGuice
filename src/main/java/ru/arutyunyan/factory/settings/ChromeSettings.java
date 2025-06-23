@@ -12,7 +12,6 @@ public class ChromeSettings implements IBrowserSettings {
 
     @Override
     public AbstractDriverOptions<?> settings() {
-        WebDriverManager.chromedriver().browserVersion("139.0.7258.0").setup();
         ChromeOptions options = new ChromeOptions();
         BrowserModeData modeData = BrowserModeData.valueOf(mode);
 
