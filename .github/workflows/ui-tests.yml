@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         run: |
           mvn clean test \
-            -Dbrowser=chrome \
+            -Dbrowser=firefox \
             -Dmode=headless
 
       - name: Install Allure CLI
