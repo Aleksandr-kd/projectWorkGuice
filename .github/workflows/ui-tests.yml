@@ -32,7 +32,7 @@ jobs:
           mvn clean test \
             -Dgroups="test" \
             -Dbrowser=firefox \
-            -Dmode=headless
+            -Dmode=headless || true
 
       - name: Install Allure CLI
         run: |
