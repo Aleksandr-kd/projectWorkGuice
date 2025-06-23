@@ -50,7 +50,7 @@ jobs:
           sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html
 
       - name: Upload Allure Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
