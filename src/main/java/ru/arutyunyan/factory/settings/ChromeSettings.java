@@ -22,8 +22,12 @@ public class ChromeSettings implements IBrowserSettings {
                     .addArguments("--disable-dev-shm-usage")
                     .addArguments("--ignore-certificate-errors")
                     .addArguments("--allow-insecure-localhost");
-            case FULLSCREEN -> options.addArguments("--start-maximized");
-            case KIOSK -> options.addArguments("--kiosk");
+            case FULLSCREEN -> options.addArguments("--start-maximized")
+                    .addArguments("--ignore-certificate-errors")
+                    .addArguments("--allow-insecure-localhost");
+            case KIOSK -> options.addArguments("--kiosk")
+                    .addArguments("--ignore-certificate-errors")
+                    .addArguments("--allow-insecure-localhost");
         };
     }
 }

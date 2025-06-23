@@ -11,8 +11,6 @@ import ru.arutyunyan.modules.GuiceDtoModule;
 import ru.arutyunyan.modules.GuicePageModule;
 import ru.arutyunyan.utils.AllureScreenshotUtils;
 
-import java.net.MalformedURLException;
-
 
 public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback {
 
@@ -20,7 +18,7 @@ public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback
     private WebDriver driver;
 
     @Override
-    public void beforeEach(ExtensionContext context) throws MalformedURLException {
+    public void beforeEach(ExtensionContext context) {
         ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(context.getUniqueId());
         driver = new WebDriverFactory().createDriver();
         context.getStore(namespace).put("driver", driver);

@@ -33,7 +33,7 @@
         <allure-maven.version>2.15.2</allure-maven.version>
         <allure-report.version>2.29.1</allure-report.version>
 
-        <aspectj.version>1.9.22</aspectj.version>
+        <aspectj.version>1.9.20.1</aspectj.version>
         <assertj-core.version>3.26.3</assertj-core.version>
         <spring-context.version>5.3.30</spring-context.version>
         <maven-failsafe-plugin.version>3.1.2</maven-failsafe-plugin.version>
@@ -125,11 +125,11 @@
                             <value>io.qameta.allure.junit5.AllureJunit5</value>
                         </property>
                         <configurationParameters>
-                            junit.jupiter.execution.parallel.enabled=false
+                            junit.jupiter.execution.parallel.enabled=true
                             junit.jupiter.execution.parallel.mode.default=concurrent
                             junit.jupiter.execution.parallel.mode.classes.default=concurrent
                             junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=2
+                            junit.jupiter.execution.parallel.config.fixed.parallelism=4
                         </configurationParameters>
                     </properties>
 
