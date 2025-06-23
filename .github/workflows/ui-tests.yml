@@ -1,3 +1,68 @@
+#name: Run UI Tests
+#
+#on:
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+#  workflow_dispatch:
+#
+#env:
+#  BROWSER: "firefox"
+#
+#jobs:
+#  ui-tests:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '23'
+#          distribution: 'temurin'
+#
+#      - name: Check site availability
+#        run: curl -I https://wishlist.otus.kartushin.su/register || true
+#
+#      - name: Set up Chrome
+#        uses: browser-actions/setup-chrome@latest
+#
+#      - name: Run tests
+#        run: |
+#          mvn clean test \
+#            -Dgroups=test \
+#            -Dbrowser=$BROWSER \
+#            -Dmode=headless
+#        continue-on-error: true
+#
+#      - name: Install Allure CLI
+#        run: |
+#          wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
+#          tar -zxvf allure-2.34.0.tgz
+#          sudo mv allure-2.34.0 /opt/allure
+#          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+#
+#      - name: Generate Allure Report
+#        run: |
+#          allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
+#
+#      - name: Upload Allure Report as artifact
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-report
+#          path: allure-report
+#
+#      - name: Deploy Allure Report to GitHub Pages
+#        if: success()
+#        uses: peaceiris/actions-gh-pages@v4
+#        with:
+#          github_token: ${{ secrets.PAT_TOKEN }}
+#          publish_dir: ./allure-report
+#          publish_branch: gh-pages
+
 name: Run UI Tests
 
 on:
@@ -8,7 +73,7 @@ on:
   workflow_dispatch:
 
 env:
-  BROWSER: "firefox"
+  BROWSER: "chrome"
 
 jobs:
   ui-tests:
@@ -30,13 +95,40 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
 
-      - name: Run tests
+      - name: Run tests (1st try)
+        id: run-tests
+        continue-on-error: true
         run: |
           mvn clean test \
             -Dgroups=test \
             -Dbrowser=$BROWSER \
             -Dmode=headless
-        continue-on-error: true
+          echo "status=$?" >> $GITHUB_OUTPUT
+
+      - name: Parse failed test classes
+        if: steps.run-tests.outputs.status != '0'
+        id: parse-fails
+        run: |
+          echo "Parsing failed test classes..."
+          mkdir -p failed-tests
+          grep -l "<<< FAILURE!" target/surefire-reports/*.txt | while read file; do
+            class_name=$(basename "$file" .txt)
+            echo "$class_name" >> failed-tests/failed.txt
+          done
+
+      - name: Retry only failed tests
+        if: steps.run-tests.outputs.status != '0'
+        run: |
+          if [ -s failed-tests/failed.txt ]; then
+            TESTS=$(paste -sd, failed-tests/failed.txt)
+            echo "Retrying failed tests: $TESTS"
+            mvn -Dtest="$TESTS" test \
+              -Dgroups=test \
+              -Dbrowser=$BROWSER \
+              -Dmode=headless
+          else
+            echo "No failed tests found for retry."
+          fi
 
       - name: Install Allure CLI
         run: |
@@ -47,6 +139,7 @@ jobs:
 
       - name: Generate Allure Report
         run: |
+          mkdir -p allure-report
           allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
 
       - name: Upload Allure Report as artifact
