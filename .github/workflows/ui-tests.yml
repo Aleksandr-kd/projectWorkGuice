@@ -49,18 +49,6 @@ jobs:
         run: |
           allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
 
-      - name: Download previous Allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-history
-          path: $RESULTS_DIR/history
-
-      - name: Save Allure history
-        if: always()
-        run: |
-          mkdir -p $RESULTS_DIR/history
-          cp -r $REPORT_DIR/history $RESULTS_DIR/ || true
-
       - name: Upload Allure Report as artifact
         uses: actions/upload-artifact@v4
         with:
