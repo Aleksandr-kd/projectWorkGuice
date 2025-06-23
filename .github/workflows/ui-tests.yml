@@ -27,12 +27,13 @@ jobs:
       - name: Set up Chrome and Firefox
         uses: browser-actions/setup-chrome@latest
 
-      - name: Run tests (don't fail build)
+      - name: Run tests
         run: |
           mvn clean test \
             -Dgroups="test" \
             -Dbrowser=firefox \
-            -Dmode=headless || echo "::warning::Tests failed, continuing build"
+            -Dmode=headless
+        continue-on-error: true
 
       - name: Install Allure CLI
         run: |

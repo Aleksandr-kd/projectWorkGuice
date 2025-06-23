@@ -194,7 +194,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     @Step("Проверка, что отсутствует подарок с названием")
     public void nameWishListShouldNotBeDisplayed(WishList wishList) {
         assertThat(getNameWishList())
-                .as("Элемент с названием %s не найден", wishList.getProductName())
+                .as("Э лемент с названием %s не найден", wishList.getProductName())
                 .isEqualTo(wishList.getProductName());
     }
 }

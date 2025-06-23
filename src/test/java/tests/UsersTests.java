@@ -51,7 +51,7 @@ public class UsersTests {
 
     @Test
     @Tag("test")
-    @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка!!!!!!!!.")
+    @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
 
         usersPage
