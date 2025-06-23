@@ -15,7 +15,6 @@ public class WebDriverFactory {
     private final String browserName = System.getProperty("browser");
 
     public WebDriver createDriver() {
-        System.setProperty("webdriver.chrome.verboseLogging", "true");
         return switch (browserName.toLowerCase()) {
             case "chrome" -> new ChromeDriver((ChromeOptions) new ChromeSettings().settings());
             case "firefox" -> new FirefoxDriver((FirefoxOptions) new FirefoxSettings().settings());

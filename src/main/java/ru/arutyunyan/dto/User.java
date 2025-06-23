@@ -13,5 +13,5 @@ public class User {
     private final Faker faker = new Faker();
     private String name = faker.name().firstName();
     private String email = faker.internet().emailAddress();
-    private String password = faker.internet().password();
+    private String password = faker.text().text(8, 16);
 }

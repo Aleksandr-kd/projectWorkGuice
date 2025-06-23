@@ -115,6 +115,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputPassword.sendKeys(user.getPassword());
 
         clickButtonRegistration();
+        waiters.waitForPageLoad();
     }
 
     /**
