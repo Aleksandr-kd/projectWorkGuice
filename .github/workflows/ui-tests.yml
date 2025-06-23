@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -24,15 +24,15 @@ jobs:
       - name: Check site availability
         run: curl -I https://wishlist.otus.kartushin.su/register || true
 
-      - name: Set up Chrome and Firefox
+      - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
 
       - name: Run tests
         run: |
           mvn clean test \
             -Dgroups="test" \
-            -Dbrowser=firefox \
-            -Dmode=headless
+            -Dbrowser="firefox" \
+            -Dmode="headless"
         continue-on-error: true
 
       - name: Install Allure CLI
@@ -52,9 +52,9 @@ jobs:
           name: allure-report
           path: allure-report
 
-      - name: Fix index.html base href
-        run: |
-          sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html || true
+#      - name: Fix index.html base href
+#        run: |
+#          sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html || true
 
       - name: Deploy Allure Report to GitHub Pages
         if: success()
