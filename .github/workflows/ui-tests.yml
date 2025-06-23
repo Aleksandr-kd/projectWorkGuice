@@ -117,7 +117,7 @@ jobs:
         run: |
           echo "Parsing failed test classes from XML..."
           mkdir -p failed-tests
-          grep -l "<failure" target/surefire-reports/TEST-*.xml | while read file; do
+          grep -El "<failure|<error" target/surefire-reports/TEST-*.xml | while read file; do
             class_name=$(basename "$file" .xml | sed 's/^TEST-//')
             echo "$class_name" >> failed-tests/failed.txt
           done
@@ -130,7 +130,7 @@ jobs:
             echo "Retrying failed tests: $TESTS"
             mvn -Dtest="$TESTS" test \
               -Dgroups=test \
-              -Dbrowser=$BROWSER \
+              -Dbrowser=$BROWSER \90
               -Dmode=headless
           else
             echo "No failed tests to retry."
