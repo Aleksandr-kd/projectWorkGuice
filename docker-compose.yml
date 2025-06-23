@@ -15,7 +15,7 @@ services:
   selenoid-ui:
     image: aerokube/selenoid-ui:latest
     ports:
-      - "8080:8080"  # Порт UI
+      - "8080:8080"
     environment:
       - SELENOID_URI=http://selenoid:4444
     depends_on:
