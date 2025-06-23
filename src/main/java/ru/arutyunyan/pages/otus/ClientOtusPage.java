@@ -67,12 +67,12 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Нажать кнопку зарегистрировать")
     public void clickButtonRegistration() {
-        buttonRegistration.click();
+        waiters.waitAndClick(buttonRegistration);
     }
 
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
-        buttonLogin.click();
+        waiters.waitAndClick(buttonLogin);
     }
 
     @Step("Заполнение формы регистрации пользователя")
@@ -159,13 +159,14 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
         waiters.waitForPageLoad();
-        waiters.waitForElementVisible(inputName);
+//        waiters.waitForElementVisible(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
-        waiters.waitForElementVisible(inputPassword);
+//        waiters.waitForElementVisible(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
-        waiters.waitForElementVisible(buttonLogin);
+//        waiters.waitForElementVisible(buttonLogin);
+
         clickButtonLogin();
 
         return this;
