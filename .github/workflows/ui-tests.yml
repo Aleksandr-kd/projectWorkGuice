@@ -24,14 +24,14 @@ jobs:
       - name: Check site availability
         run: curl -I https://wishlist.otus.kartushin.su/register || true
 
-#      - name: Set up Chrome
-#        uses: browser-actions/setup-chrome@latest
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@latest
 
       - name: Run tests
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=firefox \
+            -Dbrowser=chrome \
             -Dmode=headless
         continue-on-error: true
 
