@@ -27,6 +27,7 @@ jobs:
       - name: Run tests
         run: |
           mvn clean test \
+            -Dgroups="test"
             -Dbrowser=firefox \
             -Dmode=headless
 
