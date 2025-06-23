@@ -32,7 +32,7 @@ jobs:
           mvn clean test \
             -Dgroups="test" \
             -Dbrowser=firefox \
-            -Dmode=headless || true
+            -Dmode=headless
 
       - name: Install Allure CLI
         run: |
@@ -48,6 +48,12 @@ jobs:
       - name: Fix index.html base href
         run: |
           sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
