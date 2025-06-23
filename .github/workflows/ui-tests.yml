@@ -103,17 +103,16 @@ jobs:
             -Dgroups=test \
             -Dbrowser=$BROWSER \
             -Dmode=headless
-        # Статус не нужен, проверим по outcome
 
       - name: Debug reports
-        if: failure()
+        if: always()
         run: |
           echo "Listing sure-fire reports..."
           ls -l target/surefire-reports || true
           cat target/surefire-reports/*.txt || true
 
       - name: Parse failed test classes
-        if: failure()
+        if: always()
         id: parse-fails
         run: |
           echo "Parsing failed test classes from XML..."
@@ -124,7 +123,7 @@ jobs:
           done
 
       - name: Retry only failed tests
-        if: failure()
+        if: always()
         run: |
           if [ -s failed-tests/failed.txt ]; then
             TESTS=$(paste -sd, failed-tests/failed.txt)
