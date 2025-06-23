@@ -42,8 +42,7 @@ jobs:
             -Dbrowser=chrome \
             -DbrowserVersion=124.0 \
             -Dmode=headless \
-            -Dremote.url=http://localhost:4444/wd/hub \
-            -Dthreads=4
+            -Dremote.url=http://localhost:4444/wd/hub
 
       - name: Print Selenoid logs
         if: always()
