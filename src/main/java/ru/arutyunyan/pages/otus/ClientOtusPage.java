@@ -108,13 +108,10 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
                 + "\npassword = " + user.getPassword());
 
         waiters.waitForPageLoad();
-//        waiters.waitForElementVisible(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
-//        waiters.waitForElementVisible(inputEmail);
         inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
-//        waiters.waitForElementVisible(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
