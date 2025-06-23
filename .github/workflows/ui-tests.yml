@@ -111,9 +111,9 @@ jobs:
         run: |
           echo "Parsing failed test classes..."
           mkdir -p failed-tests
-          grep -l "<<< FAILURE!" target/surefire-reports/*.txt | while read file; do
-            class_name=$(basename "$file" .txt)
-            echo "$class_name" >> failed-tests/failed.txt
+          grep -l "<failure" target/surefire-reports/TEST-*.xml | while read file; do
+          class_name=$(basename "$file" .xml | sed 's/^TEST-//')
+          echo "$class_name" >> failed-tests/failed.txt
           done
 
       - name: Retry only failed tests

@@ -68,7 +68,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>${allure-junit5.version}</version>
+            <version>${allure.version}</version>
         </dependency>
         <dependency>
             <groupId>net.datafaker</groupId>
@@ -89,11 +89,6 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
             <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>${allure.version}</version>
         </dependency>
     </dependencies>
 
@@ -134,7 +129,7 @@
                             junit.jupiter.execution.parallel.mode.default=concurrent
                             junit.jupiter.execution.parallel.mode.classes.default=concurrent
                             junit.jupiter.execution.parallel.config.strategy=fixed
-                            junit.jupiter.execution.parallel.config.fixed.parallelism=2
+                            junit.jupiter.execution.parallel.config.fixed.parallelism=4
                         </configurationParameters>
                     </properties>
 
