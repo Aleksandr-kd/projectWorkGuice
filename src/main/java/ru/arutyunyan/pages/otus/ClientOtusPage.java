@@ -107,18 +107,18 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
                 + "\nemail: " + user.getEmail()
                 + "\npassword = " + user.getPassword());
 
-        waiters.waitForElementVisible(inputName);
-        inputName.clear();
+        waiters.waitForPageLoad();
+//        waiters.waitForElementVisible(inputName);
+//        inputName.clear();
         inputName.sendKeys(user.getName());
-        waiters.waitForElementVisible(inputEmail);
-        inputEmail.clear();
+//        waiters.waitForElementVisible(inputEmail);
+//        inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
-        waiters.waitForElementVisible(inputPassword);
-        inputPassword.clear();
+//        waiters.waitForElementVisible(inputPassword);
+//        inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
         clickButtonRegistration();
-        waiters.waitForPageLoad();
     }
 
     /**
@@ -161,6 +161,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
+        waiters.waitForPageLoad();
         waiters.waitForElementVisible(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
@@ -169,7 +170,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputPassword.sendKeys(user.getPassword());
         waiters.waitForElementVisible(buttonLogin);
         clickButtonLogin();
-        waiters.waitForPageLoad();
 
         return this;
     }
