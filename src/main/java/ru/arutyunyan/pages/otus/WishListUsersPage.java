@@ -45,6 +45,7 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
 
     @Step("Открываю страницу пользователей")
     public WishListUsersPage openUsers() {
+        waiters.waitForElementVisible(clickUsers);
         waiters.waitAndClick(clickUsers);
         return this;
     }

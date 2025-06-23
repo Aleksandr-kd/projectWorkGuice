@@ -52,10 +52,6 @@ jobs:
           name: allure-report
           path: allure-report
 
-#      - name: Fix index.html base href
-#        run: |
-#          sed -i 's|<base href="/">|<base href="./">|' allure-report/index.html || true
-
       - name: Deploy Allure Report to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v4
