@@ -118,13 +118,6 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return this;
     }
 
-//    public UsersPage viewWishList() {
-//        waiters.waitForElementVisible(modal);
-//        waiters.waitForElementInVisible(modal);
-//        buttonViewWishList.click();
-//        return this;
-//    }
-
     @Step("Получение названия последнего желания")
     public String getNameWishList() {
         waiters.waitForElementVisible(nameWishList);
