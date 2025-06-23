@@ -1,7 +1,6 @@
 package ru.arutyunyan.factory.settings;
 
 import ru.arutyunyan.data.BrowserModeData;
-import ru.arutyunyan.exceptions.ModeNotSupportedException;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
 
