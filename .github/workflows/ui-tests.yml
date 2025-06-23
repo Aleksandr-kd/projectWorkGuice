@@ -31,7 +31,7 @@ jobs:
         run: |
           mvn clean test \
             -Dgroups="test" \
-            -Dbrowser=chrome \
+            -Dbrowser=firefox \
             -Dmode=headless
         continue-on-error: true
 
