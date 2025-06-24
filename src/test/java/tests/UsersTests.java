@@ -48,25 +48,25 @@ public class UsersTests {
                 .wishListShouldBeDelete();
     }
 
-//    @Test
-//    @Tag("test")
-//    @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
-//    public void userPresentView() {
-//
-//        usersPage
-//                .open();
-//
-//        clientOtusPage
-//                .registration(user)
-//                .authorization(user);
-//
-//        usersPage
-//                .deleteAllWishLists()
-//                .buttonDeleteWishListShouldNotBeDisplayed()
-//                .clickCreateNewWishList()
-//                .formCreateNewWishList(wishList)
-//                .clickButtonCreate()
-//                .viewWishList()
-//                .nameWishListShouldNotBeDisplayed(wishList);
-//    }
+    @Test
+    @Tag("test")
+    @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
+    public void userPresentView() {
+
+        usersPage
+                .open();
+
+        clientOtusPage
+                .registration(user)
+                .authorization(user);
+
+        usersPage
+                .deleteAllWishLists()
+                .buttonDeleteWishListShouldNotBeDisplayed()
+                .clickCreateNewWishList()
+                .formCreateNewWishList(wishList)
+                .clickButtonCreate()
+                .viewWishList()
+                .nameWishListShouldNotBeDisplayed(wishList);
+    }
 }
