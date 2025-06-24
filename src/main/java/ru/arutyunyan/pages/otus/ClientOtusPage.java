@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.pages.AbsBasePage;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Random;
 
