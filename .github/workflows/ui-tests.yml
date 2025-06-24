@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  BROWSER: "firefox"
+  BROWSER: "chrome"
 
 jobs:
   ui-tests:
@@ -30,7 +30,7 @@ jobs:
       - name: Set up Chrome
         uses: browser-actions/setup-chrome@latest
 
-      - name: Run tests (1st try)
+      - name: Run tests
         id: first-run
         continue-on-error: true
         run: |
@@ -57,7 +57,7 @@ jobs:
             echo "$class_name" >> failed-tests/failed.txt
           done
 
-      - name: Retry only failed tests
+      - name: Run only failed tests
         continue-on-error: true
         if: always()
         run: |
