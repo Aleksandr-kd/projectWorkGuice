@@ -169,19 +169,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         return letters.substring(index, index + 1);
     }
 
-    @Step("Получаем нового пользователя")
-    private void newUser(User user, String suffix) {
-        String oldName = user.getName();
-        String oldEmail = user.getEmail();
-
-        user.setName(oldName + suffix);
-        user.setEmail(oldEmail.replace("@", suffix + "@"));
-
-        Allure.step("Изменение юзера: "
-                + "Было: " + oldName + ", стало: " + user.getName()
-                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail());
-    }
-
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
         waiters.waitForElementVisible(inputName);
