@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  BROWSER: "chrome"
+  BROWSER: "firefox"
 
 jobs:
   ui-tests:
@@ -57,7 +57,7 @@ jobs:
             echo "$class_name" >> failed-tests/failed.txt
           done
 
-      - name: Run only failed tests
+      - name: Run failed tests
         continue-on-error: true
         if: always()
         run: |
