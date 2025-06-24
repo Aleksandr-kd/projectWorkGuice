@@ -5,8 +5,8 @@
 
 mvn clean test \
   -Dgroups=test \
-  -Dbrowser=firefox \  # или chrome
-  -Dmode=headless      # или fullscreen, kiosk
+  -Dbrowser=firefox \
+  -Dmode=headless      
 
 ### Запуск тестов GitHub Actions
 
