@@ -100,6 +100,20 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         throw new RuntimeException("Не удалось зарегистрировать пользователя");
     }
 
+    @Step("Получаем нового пользователя")
+    private User newUser(User user, String suffix) {
+        String oldName = user.getName();
+        String oldEmail = user.getEmail();
+
+        user.setName(oldName + suffix);
+        user.setEmail(oldEmail.replace("@", suffix + "@"));
+
+        Allure.step("Изменение юзера: "
+                + "Было: " + oldName + ", стало: " + user.getName()
+                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail());
+        return user;
+    }
+
     private void fillForm(User user) {
         Allure.step("Вводим данныe: "
                 + "\nname: " + user.getName()
