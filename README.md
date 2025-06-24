@@ -10,4 +10,5 @@ mvn clean test \
 
 ### Запуск тестов GitHub Actions
 
-Тесты запускаются автоматически при push-событиях или вручную через кнопку Run workflow в интерфейсе GitHub Actions.
+1. Тесты запускаются автоматически при push-событиях 
+2. Вручную через кнопку Run workflow в интерфейсе GitHub Actions.
