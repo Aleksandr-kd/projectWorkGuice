@@ -1,6 +1,5 @@
 package ru.arutyunyan.factory.settings;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.AbstractDriverOptions;
 import ru.arutyunyan.data.BrowserModeData;

@@ -50,10 +50,6 @@ public class Waiters {
                 .ignoring(ElementNotInteractableException.class);
     }
 
-    public boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() > 0;
-    }
-
     @Step("Ожидание и клик по элементу")
     public void waitAndClick(WebElement element) {
         waitForElementToBeClickable(element).click();
