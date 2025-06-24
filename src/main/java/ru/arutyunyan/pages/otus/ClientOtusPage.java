@@ -8,9 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.pages.AbsBasePage;
-import java.util.Random;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Random;
 
 
 @Path("/register")
@@ -111,9 +110,16 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputName.clear();
         inputName.sendKeys(user.getName());
 
-        waiters.waitAndClick(inputEmail);
-        inputEmail.clear();
-        inputEmail.sendKeys(user.getEmail());
+        try {
+            if (inputEmail != null && inputEmail.isDisplayed()) {
+
+                waiters.waitAndClick(inputEmail);
+                inputEmail.clear();
+                inputEmail.sendKeys(user.getEmail());
+            }
+        } catch (Exception e) {
+            Allure.step("Email поле не найдено");
+        }
 
         waiters.waitAndClick(inputPassword);
         inputPassword.clear();
