@@ -170,28 +170,15 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
-        waiters.waitForPageLoad();
-
-        waiters.waitAndClick(inputName);
+        waiters.waitForElementVisible(inputName);
+        Allure.step("Ввод логина: " + user.getName());
         inputName.clear();
         inputName.sendKeys(user.getName());
 
-//        waiters.waitAndClick(inputPassword);
-//        inputPassword.clear();
-//        inputPassword.sendKeys(user.getPassword());
-
-        waiters.waitAndClick(inputPassword);
-        waiters.waitForElementVisible(inputPassword, 3);
+        waiters.waitForElementVisible(inputPassword);
         Allure.step("Ввод пароля: " + user.getPassword());
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
-
-        String value = inputPassword.getAttribute("value");
-        if (value == null || value.isEmpty()) {
-            Allure.step("⚠️ Пароль не ввёлся, пробуем снова");
-            inputPassword.clear();
-            inputPassword.sendKeys(user.getPassword());
-        }
 
         clickButtonLogin();
 
