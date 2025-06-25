@@ -8,6 +8,7 @@ on:
 env:
   BROWSER: "chrome"
 
+
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
