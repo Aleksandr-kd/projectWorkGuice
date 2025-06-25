@@ -75,9 +75,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
-        waiters.waitForElementInVisible(buttonRegistration);
-        waiters.waitForElementVisible(buttonLogin);
-        waiters.waitAndClick(buttonLogin);
+        buttonLogin.isDisplayed();
+        buttonLogin.click();
     }
 
     @Step("Заполнение формы регистрации пользователя")
