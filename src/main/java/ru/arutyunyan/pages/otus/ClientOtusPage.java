@@ -7,10 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
-import ru.arutyunyan.dto.UserFactory;
 import ru.arutyunyan.pages.AbsBasePage;
-
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -77,70 +74,30 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         buttonLogin.click();
     }
 
-    @Step("Заполнение формы регистрации пользователя")
-    public User registration(User baseUser) {
-        int attempt = 1;
-        String suffix = "";
-        User currentUser = baseUser;
-
-        while (attempt <= 5) {
-            try {
-                if (attempt > 1) {
-                    suffix += getRandomChar();
-                    currentUser = UserFactory.mutateUser(baseUser, suffix);
-                    Allure.step("Попытка #" + attempt + ": " + currentUser);
-                }
-
-                fillFormRegistration(currentUser);
-
-                Allure.step("Регистрируем: " + currentUser.getName() + ", " + currentUser.getPassword());
-                if (!isErrorPresent()) {
-                    return currentUser;
-                }
-            } catch (Exception e) {
-                Allure.step("Ошибка: " + e.getMessage());
-            }
-            attempt++;
-        }
-
-        throw new RuntimeException("Не удалось зарегистрировать пользователя");
-    }
-
-    private void fillFormRegistration(User user) {
+    public User registration(User user) {
         Allure.step("Вводим данныe: "
                 + "\nname: " + user.getName()
                 + "\nemail: " + user.getEmail()
                 + "\npassword = " + user.getPassword());
 
-        waiters.waitForPageLoad();
-        waiters.waitAndClick(inputName);
+        waiters.waitForElementVisible(pageHeaderRegistration);
         inputName.clear();
         inputName.sendKeys(user.getName());
 
-        try {
-            if (inputEmail != null && inputEmail.isDisplayed()) {
-
-        waiters.waitAndClick(inputEmail);
         inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
-            }
-        } catch (Exception e) {
-            Allure.step("!!!!!!Email поле не найдено!!!!!!");
-        }
-
-
-        waiters.waitAndClick(inputPassword);
-        inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
+        inputPassword.clear();
+        inputPassword.sendKeys(user.getPassword());
         clickButtonRegistration();
-        waiters.waitForPageLoad();
+        return user;
     }
 
     @Step("Заполнение формы авторизации пользователя")
     public ClientOtusPage authorization(User user) {
-        waiters.waitForPageLoad();
         Allure.step("Ввод логина: " + user.getName());
+        waiters.waitForElementVisible(textButtonLogin);
         inputName.clear();
         inputName.sendKeys(user.getName());
 
@@ -149,35 +106,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputPassword.sendKeys(user.getPassword());
 
         clickButtonLogin();
-
-        Allure.step("Авторизация. Ожидаем логин: " + user.getName());
-        Allure.step("Авторизация. Ожидаем пароль: " + user.getPassword());
+        waiters.waitForPageLoad();
         return this;
-    }
-
-    /**
-     * Проверяет видимость сообщения об ошибке регистрации.
-     *
-     * @return true если сообщение отобразится в течение 2 секунд
-     */
-    private boolean isErrorPresent() {
-        try {
-            waiters.waitForElementVisible(notRegistrationMessage, 2);
-            return notRegistrationMessage.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Генерирует случайную строчную букву английского алфавита.
-     *
-     * @return Случайный символ из диапазона 'a'-'z'
-     */
-    private String getRandomChar() {
-        String letters = "abcdefghijklmnopqrstuvwxyz";
-        int index = new Random().nextInt(letters.length());
-        return letters.substring(index, index + 1);
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}'")

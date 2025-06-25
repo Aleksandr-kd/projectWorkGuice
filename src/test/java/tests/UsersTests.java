@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.arutyunyan.dto.User;
-import ru.arutyunyan.dto.UserFactory;
 import ru.arutyunyan.dto.WishList;
 import ru.arutyunyan.extension.TestSetupExtension;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
@@ -29,7 +28,7 @@ public class UsersTests {
     @Tag("test")
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
-        User user = UserFactory.generateUser();
+        User user = new User();
 
         clientOtusPage
                 .open()
@@ -56,7 +55,7 @@ public class UsersTests {
     @Tag("test")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
-        User user = UserFactory.generateUser();
+        User user = new User();
 
         clientOtusPage
                 .open()

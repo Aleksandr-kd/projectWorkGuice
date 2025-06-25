@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.arutyunyan.dto.User;
-import ru.arutyunyan.dto.UserFactory;
 import ru.arutyunyan.extension.TestSetupExtension;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 
@@ -21,7 +20,7 @@ public class AccountUserTests {
     @Tag("test")
     @DisplayName("Регистрации пользователя.")
     public void userRegistration() {
-        User user = UserFactory.generateUser();
+        User user = new User();
 
         clientOtusPage
                 .open()

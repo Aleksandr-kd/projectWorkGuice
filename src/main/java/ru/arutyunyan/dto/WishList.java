@@ -16,6 +16,5 @@ public class WishList {
     private final String description = faker.commerce().material();
     private final String descriptionProduct = String.format(
             "Это описание и сам товар: %s могут не совпадать по логике друг с другом: %s",
-            productName, description
-    );
+            productName, description);
 }
