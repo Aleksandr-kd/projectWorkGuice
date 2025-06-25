@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
-import ru.arutyunyan.factory.UserFactory;
+import ru.arutyunyan.dto.UserFactory;
 import ru.arutyunyan.pages.AbsBasePage;
 
 import java.util.Random;
@@ -83,7 +83,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         String suffix = "";
         User currentUser = baseUser;
 
-        while (attempt <= 9) {
+        while (attempt <= 5) {
             try {
                 if (attempt > 1) {
                     suffix += getRandomChar();
@@ -133,7 +133,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
-//        clickButtonRegistration();
         clickButtonRegistration();
         waiters.waitForPageLoad();
     }
@@ -142,21 +141,17 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     public ClientOtusPage authorization(User user) {
         waiters.waitForPageLoad();
         Allure.step("Ввод логина: " + user.getName());
-        waiters.waitAndClick(inputName);
         inputName.clear();
         inputName.sendKeys(user.getName());
 
         Allure.step("Ввод пароля: " + user.getPassword());
-        waiters.waitAndClick(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
         clickButtonLogin();
-        waiters.waitForPageLoad();
 
         Allure.step("Авторизация. Ожидаем логин: " + user.getName());
         Allure.step("Авторизация. Ожидаем пароль: " + user.getPassword());
-
         return this;
     }
 
@@ -186,9 +181,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}'")
-    public ClientOtusPage pageTitleShouldBeSame(String title) {
+    public void pageTitleShouldBeSame(String title) {
         assertThat(getPageTextRegistration()).isEqualTo(title);
-        return this;
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}' для авторизации пользователя")

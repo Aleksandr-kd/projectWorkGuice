@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.arutyunyan.dto.User;
+import ru.arutyunyan.dto.UserFactory;
 import ru.arutyunyan.dto.WishList;
 import ru.arutyunyan.extension.TestSetupExtension;
-import ru.arutyunyan.factory.UserFactory;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 import ru.arutyunyan.pages.otus.UsersPage;
 
@@ -28,7 +28,7 @@ public class UsersTests {
     @Test
     @Tag("test")
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
-    public void userPresentView() throws InterruptedException {
+    public void userPresentView() {
         User user = UserFactory.generateUser();
 
         clientOtusPage
@@ -49,5 +49,31 @@ public class UsersTests {
                 .clickButtonCreate()
                 .viewWishList()
                 .nameWishListShouldNotBeDisplayed(wishList);
+    }
+
+
+    @Test
+    @Tag("test")
+    @DisplayName("Управление пользователем списка желаний.")
+    public void userPresentWishList() {
+        User user = UserFactory.generateUser();
+
+        clientOtusPage
+                .open()
+                .pageTitleShouldBeSame("Регистрация");
+
+        User registeredUser = clientOtusPage
+                .registration(user);
+
+        clientOtusPage
+                .authorization(registeredUser);
+
+        usersPage
+                .createNewWishList()
+                .formCreateNewWishList(wishList)
+                .clickButtonCreate()
+                .addNameWishListShouldBeSame(wishList)
+                .addDescriptionWishLisShouldBeSame(wishList)
+                .wishListShouldBeDelete();
     }
 }

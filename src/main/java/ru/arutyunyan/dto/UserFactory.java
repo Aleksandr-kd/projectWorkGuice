@@ -1,7 +1,6 @@
-package ru.arutyunyan.factory;
+package ru.arutyunyan.dto;
 
 import net.datafaker.Faker;
-import ru.arutyunyan.dto.User;
 
 public class UserFactory {
 
