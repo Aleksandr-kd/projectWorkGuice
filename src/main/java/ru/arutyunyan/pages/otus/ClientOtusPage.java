@@ -76,6 +76,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
         waiters.waitForElementVisible(buttonLogin);
+        waiters.waitForElementVisible(buttonLogin, 2);
         waiters.waitAndClick(buttonLogin);
     }
 
