@@ -26,7 +26,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     private WebElement notRegistrationMessage;
 
     @FindBy(xpath = "//h2[text()='Вход в систему']")
-    private WebElement getButtonLogin;
+    private WebElement textButtonLogin;
 
     @FindBy(xpath = "//button[@type='submit']")
     private WebElement buttonLogin;
@@ -59,7 +59,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Получение текста страницы Вход в систему")
     public String getTextLogin() {
-        return waiters.waitAndGetText(getButtonLogin);
+        return waiters.waitAndGetText(textButtonLogin);
     }
 
     @Step("Получение текста страницы Регистрации")
@@ -75,8 +75,8 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
+        waiters.waitForElementVisible(textButtonLogin);
         waiters.waitForElementVisible(buttonLogin);
-        waiters.waitForElementVisible(buttonLogin, 5);
         waiters.waitAndClick(buttonLogin);
     }
 
