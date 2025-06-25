@@ -117,16 +117,16 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputName.clear();
         inputName.sendKeys(user.getName());
 
-//        try {
-//            if (inputEmail != null && inputEmail.isDisplayed()) {
+        try {
+            if (inputEmail != null && inputEmail.isDisplayed()) {
 
         waiters.waitAndClick(inputEmail);
         inputEmail.clear();
         inputEmail.sendKeys(user.getEmail());
-//            }
-//        } catch (Exception e) {
-//            Allure.step("!!!!!!Email поле не найдено!!!!!!");
-//        }
+            }
+        } catch (Exception e) {
+            Allure.step("!!!!!!Email поле не найдено!!!!!!");
+        }
 
 
         waiters.waitAndClick(inputPassword);
