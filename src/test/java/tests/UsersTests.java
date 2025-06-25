@@ -31,10 +31,11 @@ public class UsersTests {
     public void userPresentView() throws InterruptedException {
         User user = UserFactory.generateUser();
 
-        usersPage.open();
+        clientOtusPage
+                .open()
+                .pageTitleShouldBeSame("Регистрация");
 
         User registeredUser = clientOtusPage
-                .pageTitleShouldBeSame("Регистрация")
                 .registration(user);
 
         clientOtusPage

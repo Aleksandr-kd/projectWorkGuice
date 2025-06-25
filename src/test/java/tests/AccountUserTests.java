@@ -23,9 +23,11 @@ public class AccountUserTests {
     public void userRegistration() throws InterruptedException {
         User user = UserFactory.generateUser();
 
-        User registeredUser = clientOtusPage
+        clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация")
+                .pageTitleShouldBeSame("Регистрация");
+
+        User registeredUser = clientOtusPage
                 .registration(user);
 
         clientOtusPage

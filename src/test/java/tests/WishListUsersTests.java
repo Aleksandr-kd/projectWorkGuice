@@ -27,12 +27,14 @@ public class WishListUsersTests {
     public void userPresentWishList() {
         User user = UserFactory.generateUser();
 
-        wishListUsersPage.open();
+        clientOtusPage
+                .open();
 
         User registeredUser = clientOtusPage
                 .registration(user);
 
-        clientOtusPage.authorization(registeredUser);
+        clientOtusPage
+                .authorization(registeredUser);
 
         wishListUsersPage
                 .openUsers()

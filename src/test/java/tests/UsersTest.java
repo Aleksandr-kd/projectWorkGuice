@@ -31,13 +31,15 @@ public class UsersTest {
     public void userPresentWishList() throws InterruptedException {
         User user = UserFactory.generateUser();
 
-        usersPage.open();
+        clientOtusPage
+                .open()
+                .pageTitleShouldBeSame("Регистрация");
 
         User registeredUser = clientOtusPage
-                .pageTitleShouldBeSame("Регистрация")
                 .registration(user);
 
-        clientOtusPage.authorization(registeredUser);
+        clientOtusPage
+                .authorization(registeredUser);
 
         usersPage
                 .createNewWishList()

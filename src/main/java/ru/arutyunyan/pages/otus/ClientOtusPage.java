@@ -105,49 +105,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
         throw new RuntimeException("Не удалось зарегистрировать пользователя");
     }
-//    @Step("Заполнение формы регистрации пользователя")
-//    public ClientOtusPage registration(User user) {
-//        int attempt = 1;
-//        String suffix = "";
-//
-//        while (attempt <= 5) {
-//            try {
-//                if (attempt > 1) {
-//                    suffix += getRandomChar();
-////                    newUser(user, suffix);
-//                    Allure.step("Попытка #" + attempt + ": " + user.getEmail());
-//                }
-//                fillForm(user);
-//
-//                Allure.step("Регистрируем: " + user.getName() + ", " + user.getPassword());
-//
-//                if (!isErrorPresent()) {
-//                    return this;
-//                }
-//            } catch (Exception e) {
-//                Allure.step("Ошибка: " + e.getMessage());
-//            }
-//            attempt++;
-//        }
-//        throw new RuntimeException("Не удалось зарегистрировать пользователя");
-//    }
-
-//    @Step("Получаем нового пользователя")
-//    private void newUser(User user, String suffix) {
-//
-//        String oldName = user.getName();
-//        String oldEmail = user.getEmail();
-//        String oldPassword = user.getPassword();
-//
-//        user.setName(oldName + suffix);
-//        user.setEmail(oldEmail.replace("@", suffix + "@"));
-//        user.setPassword(oldPassword + suffix);
-//
-//        Allure.step("Изменение юзера: "
-//                + "Было: " + oldName + ", стало: " + user.getName()
-//                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail()
-//                + "\nПароль был: " + oldPassword + ", стал: " + user.getPassword());
-//    }
 
     private void fillFormRegistration(User user) {
         Allure.step("Вводим данныe: "
