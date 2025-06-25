@@ -171,6 +171,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 //            Allure.step("!!!!!!Email поле не найдено!!!!!!");
 //        }
 
+
         waiters.waitAndClick(inputPassword);
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
