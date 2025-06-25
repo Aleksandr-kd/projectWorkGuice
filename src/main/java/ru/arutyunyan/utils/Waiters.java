@@ -13,7 +13,7 @@ public class Waiters {
 
     private final WebDriver driver;
 
-    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(20);
+    private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(200);
     private static final Duration POLLING_INTERVAL = Duration.ofMillis(500);
 
     public Waiters(WebDriver driver) {

@@ -91,7 +91,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
                     Allure.step("Попытка #" + attempt + ": " + currentUser);
                 }
 
-                fillForm(currentUser);
+                fillFormRegistration(currentUser);
 
                 Allure.step("Регистрируем: " + currentUser.getName() + ", " + currentUser.getPassword());
                 if (!isErrorPresent()) {
@@ -149,7 +149,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 //                + "\nПароль был: " + oldPassword + ", стал: " + user.getPassword());
 //    }
 
-    private void fillForm(User user) throws InterruptedException {
+    private void fillFormRegistration(User user) {
         Allure.step("Вводим данныe: "
                 + "\nname: " + user.getName()
                 + "\nemail: " + user.getEmail()
@@ -181,6 +181,28 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         waiters.waitForPageLoad();
     }
 
+    @Step("Заполнение формы авторизации пользователя")
+    public ClientOtusPage authorization(User user) {
+        waiters.waitForPageLoad();
+        Allure.step("Ввод логина: " + user.getName());
+        waiters.waitAndClick(inputName);
+        inputName.clear();
+        inputName.sendKeys(user.getName());
+
+        Allure.step("Ввод пароля: " + user.getPassword());
+        waiters.waitAndClick(inputPassword);
+        inputPassword.clear();
+        inputPassword.sendKeys(user.getPassword());
+
+        clickButtonLogin();
+        waiters.waitForPageLoad();
+
+        Allure.step("Авторизация. Ожидаем логин: " + user.getName());
+        Allure.step("Авторизация. Ожидаем пароль: " + user.getPassword());
+
+        return this;
+    }
+
     /**
      * Проверяет видимость сообщения об ошибке регистрации.
      *
@@ -204,28 +226,6 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         String letters = "abcdefghijklmnopqrstuvwxyz";
         int index = new Random().nextInt(letters.length());
         return letters.substring(index, index + 1);
-    }
-
-    @Step("Заполнение формы авторизации пользователя")
-    public ClientOtusPage authorization(User user) {
-        waiters.waitForElementVisible(inputName);
-        Allure.step("Ввод логина: " + user.getName());
-
-        inputName.clear();
-        inputName.sendKeys(user.getName());
-
-        waiters.waitForElementVisible(inputPassword);
-        Allure.step("Ввод пароля: " + user.getPassword());
-
-        inputPassword.clear();
-        inputPassword.sendKeys(user.getPassword());
-
-        clickButtonLogin();
-
-        Allure.step("Авторизация. Ожидаем логин: " + user.getName());
-        Allure.step("Авторизация. Ожидаем пароль: " + user.getPassword());
-
-        return this;
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}'")
