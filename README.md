@@ -3,10 +3,7 @@
 
 ### Запуск тестов локально
 
-mvn clean test \
-  -Dgroups=test \
-  -Dbrowser=firefox \
-  -Dmode=headless      
+mvn clean test -Dgroups=test -Dbrowser=firefox -Dmode=headless      
 
 ### Запуск тестов GitHub Actions
 
