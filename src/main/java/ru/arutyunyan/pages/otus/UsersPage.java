@@ -63,7 +63,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
     }
 
     @Step("Нажать кнопку Создать новый список")
-    public UsersPage clickCreateNewWishList() {
+    public UsersPage createNewWishList() {
         waiters.waitForElementVisible(buttonCreateNewWishList);
         waiters.waitAndClick(buttonCreateNewWishList);
         return this;

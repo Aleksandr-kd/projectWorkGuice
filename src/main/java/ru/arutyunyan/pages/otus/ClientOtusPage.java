@@ -69,13 +69,11 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Нажать кнопку зарегистрировать")
     public void clickButtonRegistration() {
-        waiters.waitForElementVisible(buttonRegistration);
         waiters.waitAndClick(buttonRegistration);
     }
 
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
-        buttonLogin.isDisplayed();
         buttonLogin.click();
     }
 
@@ -85,7 +83,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         String suffix = "";
         User currentUser = baseUser;
 
-        while (attempt <= 5) {
+        while (attempt <= 9) {
             try {
                 if (attempt > 1) {
                     suffix += getRandomChar();
@@ -151,7 +149,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 //                + "\nПароль был: " + oldPassword + ", стал: " + user.getPassword());
 //    }
 
-    private void fillForm(User user) {
+    private void fillForm(User user) throws InterruptedException {
         Allure.step("Вводим данныe: "
                 + "\nname: " + user.getName()
                 + "\nemail: " + user.getEmail()
@@ -177,6 +175,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
+        wait(2000);
         clickButtonRegistration();
         waiters.waitForPageLoad();
     }

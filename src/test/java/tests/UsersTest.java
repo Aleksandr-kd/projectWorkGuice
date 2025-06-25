@@ -40,7 +40,7 @@ public class UsersTest {
         clientOtusPage.authorization(registeredUser);
 
         usersPage
-                .clickCreateNewWishList()
+                .createNewWishList()
                 .formCreateNewWishList(wishList)
                 .clickButtonCreate()
                 .addNameWishListShouldBeSame(wishList)

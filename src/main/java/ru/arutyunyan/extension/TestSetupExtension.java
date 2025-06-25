@@ -48,7 +48,7 @@ public class TestSetupExtension implements BeforeEachCallback, AfterEachCallback
         context.getStore(namespace).remove("injector");
     }
 }
-//
+
 //package ru.arutyunyan.extension;
 //
 //import com.google.inject.Guice;

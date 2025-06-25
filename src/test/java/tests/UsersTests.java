@@ -43,7 +43,7 @@ public class UsersTests {
         usersPage
                 .deleteAllWishLists()
                 .buttonDeleteWishListShouldNotBeDisplayed()
-                .clickCreateNewWishList()
+                .createNewWishList()
                 .formCreateNewWishList(wishList)
                 .clickButtonCreate()
                 .viewWishList()
