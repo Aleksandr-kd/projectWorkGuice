@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.extension.TestSetupExtension;
+import ru.arutyunyan.factory.UserFactory;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 
 
@@ -16,20 +17,20 @@ public class AccountUserTests {
     @Inject
     private ClientOtusPage clientOtusPage;
 
-    @Inject
-    private User user;
-
     @Test
     @Tag("test")
     @DisplayName("Регистрации пользователя.")
-    public void userRegistration() {
+    public void userRegistration() throws InterruptedException {
+        User user = UserFactory.generateUser();
 
-        clientOtusPage
+        User registeredUser = clientOtusPage
                 .open()
                 .pageTitleShouldBeSame("Регистрация")
-                .registration(user)
+                .registration(user);
+
+        clientOtusPage
                 .pageTitleRegistrationShouldBeSame("Вход в систему")
-                .authorization(user)
+                .authorization(registeredUser)
                 .pageTitleAuthorizationShouldBeSame("Мои списки желаний");
     }
 }

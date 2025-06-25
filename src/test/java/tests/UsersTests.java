@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import ru.arutyunyan.dto.User;
 import ru.arutyunyan.dto.WishList;
 import ru.arutyunyan.extension.TestSetupExtension;
+import ru.arutyunyan.factory.UserFactory;
 import ru.arutyunyan.pages.otus.ClientOtusPage;
 import ru.arutyunyan.pages.otus.UsersPage;
 
@@ -22,43 +23,22 @@ public class UsersTests {
     private UsersPage usersPage;
 
     @Inject
-    private User user;
-
-    @Inject
     private WishList wishList;
 
     @Test
     @Tag("test")
-    @DisplayName("Управление пользователем списка желаний.")
-    public void userPresentWishList() {
-
-        usersPage
-                .open();
-
-        clientOtusPage
-                .registration(user)
-                .authorization(user);
-
-        usersPage
-                .clickCreateNewWishList()
-                .formCreateNewWishList(wishList)
-                .clickButtonCreate()
-                .addNameWishListShouldBeSame(wishList)
-                .addDescriptionWishLisShouldBeSame(wishList)
-                .wishListShouldBeDelete();
-    }
-
-    @Test
-    @Tag("test")
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
-    public void userPresentView() {
+    public void userPresentView() throws InterruptedException {
+        User user = UserFactory.generateUser();
 
-        usersPage
-                .open();
+        usersPage.open();
+
+        User registeredUser = clientOtusPage
+                .pageTitleShouldBeSame("Регистрация")
+                .registration(user);
 
         clientOtusPage
-                .registration(user)
-                .authorization(user);
+                .authorization(registeredUser);
 
         usersPage
                 .deleteAllWishLists()

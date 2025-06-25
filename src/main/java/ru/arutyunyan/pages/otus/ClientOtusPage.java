@@ -7,10 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ru.arutyunyan.annotations.Path;
 import ru.arutyunyan.dto.User;
+import ru.arutyunyan.factory.UserFactory;
 import ru.arutyunyan.pages.AbsBasePage;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Random;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @Path("/register")
@@ -67,53 +69,87 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
     @Step("Нажать кнопку зарегистрировать")
     public void clickButtonRegistration() {
+        waiters.waitForElementVisible(buttonRegistration);
         waiters.waitAndClick(buttonRegistration);
     }
 
     @Step("Нажать кнопку Войти")
     public void clickButtonLogin() {
+        waiters.waitForElementVisible(buttonLogin);
         waiters.waitAndClick(buttonLogin);
     }
 
     @Step("Заполнение формы регистрации пользователя")
-    public ClientOtusPage registration(User user) {
+    public User registration(User baseUser) {
         int attempt = 1;
         String suffix = "";
+        User currentUser = baseUser;
 
         while (attempt <= 5) {
             try {
                 if (attempt > 1) {
                     suffix += getRandomChar();
-                    newUser(user, suffix);
-                    Allure.step("Попытка #" + attempt + ": " + user.getEmail());
+                    currentUser = UserFactory.mutateUser(baseUser, suffix);
+                    Allure.step("Попытка #" + attempt + ": " + currentUser);
                 }
-                fillForm(user);
 
+                fillForm(currentUser);
+
+                Allure.step("Регистрируем: " + currentUser.getName() + ", " + currentUser.getPassword());
                 if (!isErrorPresent()) {
-                    return this;
+                    return currentUser;
                 }
             } catch (Exception e) {
                 Allure.step("Ошибка: " + e.getMessage());
             }
             attempt++;
         }
+
         throw new RuntimeException("Не удалось зарегистрировать пользователя");
     }
+//    @Step("Заполнение формы регистрации пользователя")
+//    public ClientOtusPage registration(User user) {
+//        int attempt = 1;
+//        String suffix = "";
+//
+//        while (attempt <= 5) {
+//            try {
+//                if (attempt > 1) {
+//                    suffix += getRandomChar();
+////                    newUser(user, suffix);
+//                    Allure.step("Попытка #" + attempt + ": " + user.getEmail());
+//                }
+//                fillForm(user);
+//
+//                Allure.step("Регистрируем: " + user.getName() + ", " + user.getPassword());
+//
+//                if (!isErrorPresent()) {
+//                    return this;
+//                }
+//            } catch (Exception e) {
+//                Allure.step("Ошибка: " + e.getMessage());
+//            }
+//            attempt++;
+//        }
+//        throw new RuntimeException("Не удалось зарегистрировать пользователя");
+//    }
 
-    @Step("Получаем нового пользователя")
-    private void newUser(User user, String suffix) {
-        String oldName = user.getName();
-        String oldEmail = user.getEmail();
-        String oldPassword = user.getPassword();
-
-        user.setName(oldName + suffix);
-        user.setEmail(oldEmail.replace("@", suffix + "@"));
-        user.setPassword(oldPassword + suffix);
-
-        Allure.step("Изменение юзера: "
-                + "Было: " + oldName + ", стало: " + user.getName()
-                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail());
-    }
+//    @Step("Получаем нового пользователя")
+//    private void newUser(User user, String suffix) {
+//
+//        String oldName = user.getName();
+//        String oldEmail = user.getEmail();
+//        String oldPassword = user.getPassword();
+//
+//        user.setName(oldName + suffix);
+//        user.setEmail(oldEmail.replace("@", suffix + "@"));
+//        user.setPassword(oldPassword + suffix);
+//
+//        Allure.step("Изменение юзера: "
+//                + "Было: " + oldName + ", стало: " + user.getName()
+//                + "\nБыло: " + oldEmail + ", стало: " + user.getEmail()
+//                + "\nПароль был: " + oldPassword + ", стал: " + user.getPassword());
+//    }
 
     private void fillForm(User user) {
         Allure.step("Вводим данныe: "
@@ -174,15 +210,20 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     public ClientOtusPage authorization(User user) {
         waiters.waitForElementVisible(inputName);
         Allure.step("Ввод логина: " + user.getName());
+
         inputName.clear();
         inputName.sendKeys(user.getName());
 
         waiters.waitForElementVisible(inputPassword);
         Allure.step("Ввод пароля: " + user.getPassword());
+
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
 
         clickButtonLogin();
+
+        Allure.step("Авторизация. Ожидаем логин: " + user.getName());
+        Allure.step("Авторизация. Ожидаем пароль: " + user.getPassword());
 
         return this;
     }

@@ -8,10 +8,10 @@ import ru.arutyunyan.dto.WishList;
 
 public class GuiceDtoModule extends AbstractModule {
 
-    @Provides
-    public User getUser() {
-        return new User();
-    }
+//    @Provides
+//    public User getUser() {
+//        return new User();
+//    }
 
     @Provides
     public WishList getWishlist() {
