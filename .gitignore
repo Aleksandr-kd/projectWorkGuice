@@ -1,6 +1,7 @@
 .allure
 .idea
-target
+target/
 *.iml
-allure-results
+allure-results/
+allure-report/
 
