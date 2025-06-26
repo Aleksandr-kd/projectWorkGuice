@@ -20,20 +20,18 @@ public class WishListUsersTests {
     @Inject
     private WishListUsersPage wishListUsersPage;
 
+    @Inject
+    private User user;
+
     @Test
     @Tag("test")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
-        User user = new User();
-
         clientOtusPage
-                .open();
-
-        User registeredUser = clientOtusPage
-                .registration(user);
-
-        clientOtusPage
-                .authorization(registeredUser);
+                .open()
+                .pageTitleShouldBeSame("Регистрация")
+                .registration(user)
+                .authorization(user);
 
         wishListUsersPage
                 .openUsers()

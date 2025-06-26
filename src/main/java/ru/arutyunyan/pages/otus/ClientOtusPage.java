@@ -74,7 +74,7 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
         buttonLogin.click();
     }
 
-    public User registration(User user) {
+    public ClientOtusPage registration(User user) {
         Allure.step("Вводим данныe: "
                 + "\nname: " + user.getName()
                 + "\nemail: " + user.getEmail()
@@ -90,8 +90,9 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
 
         inputPassword.clear();
         inputPassword.sendKeys(user.getPassword());
+
         clickButtonRegistration();
-        return user;
+        return this;
     }
 
     @Step("Заполнение формы авторизации пользователя")
@@ -111,8 +112,9 @@ public class ClientOtusPage extends AbsBasePage<ClientOtusPage> {
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}'")
-    public void pageTitleShouldBeSame(String title) {
+    public ClientOtusPage pageTitleShouldBeSame(String title) {
         assertThat(getPageTextRegistration()).isEqualTo(title);
+        return this;
     }
 
     @Step("Проверка, что заголовок страницы соответствует '{title}' для авторизации пользователя")

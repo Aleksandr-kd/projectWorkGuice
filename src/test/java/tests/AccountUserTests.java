@@ -16,22 +16,19 @@ public class AccountUserTests {
     @Inject
     private ClientOtusPage clientOtusPage;
 
+    @Inject
+    private User user;
+
     @Test
     @Tag("test")
     @DisplayName("Регистрации пользователя.")
     public void userRegistration() {
-        User user = new User();
-
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация");
-
-        User registeredUser = clientOtusPage
-                .registration(user);
-
-        clientOtusPage
+                .pageTitleShouldBeSame("Регистрация")
+                .registration(user)
                 .pageTitleRegistrationShouldBeSame("Вход в систему")
-                .authorization(registeredUser)
+                .authorization(user)
                 .pageTitleAuthorizationShouldBeSame("Мои списки желаний");
     }
 }

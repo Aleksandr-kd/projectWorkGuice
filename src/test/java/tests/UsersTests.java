@@ -24,21 +24,18 @@ public class UsersTests {
     @Inject
     private WishList wishList;
 
+    @Inject
+    private User user;
+
     @Test
     @Tag("test")
     @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
     public void userPresentView() {
-        User user = new User();
-
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация");
-
-        User registeredUser = clientOtusPage
-                .registration(user);
-
-        clientOtusPage
-                .authorization(registeredUser);
+                .pageTitleShouldBeSame("Регистрация")
+                .registration(user)
+                .authorization(user);
 
         usersPage
                 .deleteAllWishLists()
@@ -55,17 +52,11 @@ public class UsersTests {
     @Tag("test")
     @DisplayName("Управление пользователем списка желаний.")
     public void userPresentWishList() {
-        User user = new User();
-
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация");
-
-        User registeredUser = clientOtusPage
-                .registration(user);
-
-        clientOtusPage
-                .authorization(registeredUser);
+                .pageTitleShouldBeSame("Регистрация")
+                .registration(user)
+                .authorization(user);
 
         usersPage
                 .createNewWishList()
