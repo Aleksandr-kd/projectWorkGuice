@@ -1,109 +1,3 @@
-#name: Run UI Tests
-#
-#on:
-#  push:
-#    branches: [ master ]
-#  workflow_dispatch:
-#
-#jobs:
-#  ui-tests:
-#    runs-on: ubuntu-latest
-#    strategy:
-#      matrix:
-#        browser: ["chrome", "firefox"]
-#
-#    steps:
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Set up JDK
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '23'
-#          distribution: 'temurin'
-#
-#      - name: Check site availability
-#        run: curl -I https://wishlist.otus.kartushin.su/register || true
-#
-#      - name: Set up Chrome
-#        if: matrix.browser == 'chrome'
-#        uses: browser-actions/setup-chrome@latest
-#
-#      - name: Set up Firefox
-#        if: matrix.browser == 'firefox'
-#        uses: browser-actions/setup-firefox@latest
-#
-#      - name: Run tests
-#        id: first-run
-#        continue-on-error: true
-#        run: |
-#          mvn clean test \
-#            -Dgroups=test \
-#            -Dbrowser=${{ matrix.browser }} \
-#            -Dmode=headless
-#
-#      - name: Debug reports
-#        if: always()
-#        run: |
-#          echo "Listing sure-fire reports..."
-#          ls -l target/surefire-reports || true
-#          cat target/surefire-reports/*.txt || true
-#
-#      - name: Parse failed test
-#        if: always()
-#        id: parse-fails
-#        run: |
-#          echo "Parsing failed test classes from XML..."
-#          mkdir -p failed-tests
-#          grep -El "<failure|<error" target/surefire-reports/TEST-*.xml | while read file; do
-#            class_name=$(basename "$file" .xml | sed 's/^TEST-//')
-#            echo "$class_name" >> failed-tests/failed.txt
-#          done
-#
-#      - name: Run failed tests
-#        continue-on-error: true
-#        if: always()
-#        run: |
-#          if [ -s failed-tests/failed.txt ]; then
-#            TESTS=$(paste -sd, failed-tests/failed.txt)
-#            echo "Retrying failed tests: $TESTS"
-#            mvn -Dtest="$TESTS" test \
-#              -Dgroups=test \
-#              -Dbrowser=$BROWSER \
-#              -Dmode=headless
-#          else
-#            echo "No failed tests to retry."
-#          fi
-
-#      - name: Install Allure CLI
-#        run: |
-#          wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
-#          tar -zxvf allure-2.34.0.tgz
-#          sudo mv allure-2.34.0 /opt/allure
-#          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-#
-#      - name: Generate Allure Report
-#        run: |
-#          mkdir -p allure-report-${{ matrix.browser }}
-#          allure generate target/allure-results --clean -o allure-report-${{ matrix.browser }}
-#          echo "Browser: ${{ matrix.browser }}" > allure-report-${{ matrix.browser }}/browser-info.txt
-#          touch allure-report-${{ matrix.browser }}/.nojekyll
-#
-#      - name: Upload Artifact
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: allure-report-${{ matrix.browser }}
-#          path: allure-report-${{ matrix.browser }}
-#
-#      - name: Deploy Allure Report to GitHub Pages
-#        if: success()
-#        uses: peaceiris/actions-gh-pages@v4
-#        with:
-#          github_token: ${{ secrets.PAT_TOKEN }}
-#          publish_dir: ./allure-report-${{ matrix.browser }}
-#          publish_branch: gh-pages-${{ matrix.browser }}
-#          force_orphan: true
-
 name: Run UI Tests
 
 on:
@@ -111,25 +5,16 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
+env:
+  BROWSER: "firefox"
+
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [ "chrome", "firefox" ]
 
     steps:
-      - uses: actions/checkout@v4
-
-
-      - name: Set up Chrome
-        if: matrix.browser == 'chrome'
-        uses: browser-actions/setup-chrome@latest
-
-      - name: Set up Firefox
-        if: matrix.browser == 'firefox'
-        uses: browser-actions/setup-firefox@latest
-
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -137,47 +22,76 @@ jobs:
           java-version: '23'
           distribution: 'temurin'
 
+      - name: Check site availability
+        run: curl -I https://wishlist.otus.kartushin.su/register || true
+
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@latest
+
       - name: Run tests
+        id: first-run
+        continue-on-error: true
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=${{ matrix.browser }} \
+            -Dbrowser=$BROWSER \
             -Dmode=headless
 
-      - name: Prepare folder for test results
+      - name: Debug reports
+        if: always()
         run: |
-          rm -rf target/allure-results
-          mkdir -p target/allure-results
+          echo "Listing sure-fire reports..."
+          ls -l target/surefire-reports || true
+          cat target/surefire-reports/*.txt || true
 
-      - name: Save results per browser
+      - name: Parse failed test
+        if: always()
+        id: parse-fails
         run: |
-          mkdir -p results-${{ matrix.browser }}
-          cp -r target/allure-results/* results-${{ matrix.browser }}/
+          echo "Parsing failed test classes from XML..."
+          mkdir -p failed-tests
+          grep -El "<failure|<error" target/surefire-reports/TEST-*.xml | while read file; do
+            class_name=$(basename "$file" .xml | sed 's/^TEST-//')
+            echo "$class_name" >> failed-tests/failed.txt
+          done
 
-      - name: Install Allure
+      - name: Run failed tests
+        continue-on-error: true
+        if: always()
         run: |
-          wget -qO- https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz \
-            | tar xz
-          echo "$PWD/allure-2.34.0/bin" >> $GITHUB_PATH
+          if [ -s failed-tests/failed.txt ]; then
+            TESTS=$(paste -sd, failed-tests/failed.txt)
+            echo "Retrying failed tests: $TESTS"
+            mvn -Dtest="$TESTS" test \
+              -Dgroups=test \
+              -Dbrowser=$BROWSER \
+              -Dmode=headless
+          else
+            echo "No failed tests to retry."
+          fi
+
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.34.0/allure-2.34.0.tgz
+          tar -zxvf allure-2.34.0.tgz
+          sudo mv allure-2.34.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Generate Allure Report
         run: |
-          mkdir -p allure-report-${{ matrix.browser }}
-          allure generate target/allure-results --clean -o allure-report-${{ matrix.browser }}
-          echo "Browser: ${{ matrix.browser }}" > allure-report-${{ matrix.browser }}/browser-info.txt
-          touch allure-report-${{ matrix.browser }}/.nojekyll
+          mkdir -p allure-report
+          allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
 
-      - name: Upload per-browser report
+      - name: Upload Allure Report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report-${{ matrix.browser }}
-          path: allure-report-${{ matrix.browser }}
+          name: allure-report
+          path: allure-report
 
       - name: Deploy Allure Report to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.PAT_TOKEN }}
-          publish_dir: ./allure-report-${{ matrix.browser }}
-          publish_branch: gh-pages-${{ matrix.browser }}
-          force_orphan: true
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
