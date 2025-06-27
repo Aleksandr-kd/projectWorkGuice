@@ -33,6 +33,9 @@ jobs:
         if: matrix.browser == 'firefox'
         uses: browser-actions/setup-firefox@latest
 
+      - name: Clean old artifacts
+        run: rm -rf reports/ || true
+
       - name: Run tests
         id: first-run
         continue-on-error: true
@@ -90,7 +93,7 @@ jobs:
       - name: Upload Allure Report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.browser }}-${{ github.run_id }}
+          name: test-results-${{ matrix.browser }}
           path: allure-report
 
       - name: Deploy Allure Report to GitHub Pages
