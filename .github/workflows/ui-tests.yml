@@ -5,12 +5,12 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
-env:
-  BROWSER: "firefox"
-
 jobs:
   ui-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [ "chrome", "firefox" ]
 
     steps:
       - name: Checkout repository
@@ -25,8 +25,8 @@ jobs:
       - name: Check site availability
         run: curl -I https://wishlist.otus.kartushin.su/register || true
 
-      - name: Set up Chrome
-        uses: browser-actions/setup-chrome@latest
+      - name: Set up ${{ matrix.browser }}
+        uses: browser-actions/setup-${{ matrix.browser }}@latest
 
       - name: Run tests
         id: first-run
