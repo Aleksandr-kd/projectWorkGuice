@@ -34,7 +34,7 @@ jobs:
         run: |
           mvn clean test \
             -Dgroups=test \
-            -Dbrowser=$BROWSER \
+            -Dbrowser=${{ matrix.browser }} \
             -Dmode=headless
 
       - name: Debug reports
