@@ -29,7 +29,7 @@ public class AccountUserTests {
                 .registration(user)
                 .pageTitleRegistrationShouldBeSame("Вход в систему")
                 .authorization(user)
-                .pageTitleAuthorizationShouldBeSame("Мои списки же ланий");
+                .pageTitleAuthorizationShouldBeSame("Мои списки желаний");
     }
 }
 
