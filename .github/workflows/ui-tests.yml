@@ -86,14 +86,12 @@ jobs:
         run: |
           mkdir -p allure-report
           allure generate target/allure-results --clean -o allure-report || echo "::warning::Allure generation failed"
-
-      - name: Clean old artifacts
-        run: rm -rf reports/ || true
+          echo "Last generated: $(date)" > allure-report/build-info.txt
 
       - name: Upload Allure Report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-results-${{ matrix.browser }}
+          name: test-results-${{ matrix.browser }}-${{ github.run_id }}
           path: allure-report
 
       - name: Deploy Allure Report to GitHub Pages
