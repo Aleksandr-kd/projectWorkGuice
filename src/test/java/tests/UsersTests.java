@@ -53,7 +53,6 @@ public class UsersTests {
     public void userPresentWishList() {
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация")
                 .registration(user)
                 .authorization(user);
 

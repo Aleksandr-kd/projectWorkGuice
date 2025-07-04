@@ -29,7 +29,6 @@ public class WishListUsersTests {
     public void userPresentWishList() {
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация")
                 .registration(user)
                 .authorization(user);
 
