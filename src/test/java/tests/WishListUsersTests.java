@@ -25,7 +25,7 @@ public class WishListUsersTests {
 
     @Test
     @Tag("test")
-    @DisplayName("Управление пользователем списка желаний.")
+    @DisplayName("Просмотр желаний всех пользователей")
     public void userPresentWishList() {
         clientOtusPage
                 .open()

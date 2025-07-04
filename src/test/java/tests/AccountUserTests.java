@@ -21,7 +21,7 @@ public class AccountUserTests {
 
     @Test
     @Tag("test")
-    @DisplayName("Регистрации пользователя.")
+    @DisplayName("Регистрация и авторизация пользователя.")
     public void userRegistration() {
         clientOtusPage
                 .open()

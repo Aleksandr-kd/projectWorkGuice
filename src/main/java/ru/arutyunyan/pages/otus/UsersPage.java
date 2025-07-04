@@ -185,7 +185,7 @@ public class UsersPage extends AbsBasePage<UsersPage> {
         return this;
     }
 
-    @Step("Проверка, что отсутствует подарок с названием")
+    @Step("Проверка, что подарок создался")
     public void nameWishListShouldNotBeDisplayed(WishList wishList) {
         assertThat(getNameWishList())
                 .as("Элемент с названием %s не найден", wishList.getProductName())
