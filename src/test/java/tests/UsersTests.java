@@ -29,7 +29,7 @@ public class UsersTests {
 
     @Test
     @Tag("test")
-    @DisplayName("Управление пользовательского подарка. Проверка поиска и просмотра подарка.")
+    @DisplayName("Управление пользовательского подарка. Проверка просмотра подарка.")
     public void userPresentView() {
         clientOtusPage
                 .open()
