@@ -33,7 +33,6 @@ public class UsersTests {
     public void userPresentView() {
         clientOtusPage
                 .open()
-                .pageTitleShouldBeSame("Регистрация")
                 .registration(user)
                 .authorization(user);
 

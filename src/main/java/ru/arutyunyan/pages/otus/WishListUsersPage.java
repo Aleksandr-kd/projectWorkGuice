@@ -51,7 +51,7 @@ public class WishListUsersPage extends AbsBasePage<WishListUsersPage> {
     }
 
     @Step("Просмотреть список желаний первого пользователя")
-    public WishListUsersPage viewWistListOne() {
+    public WishListUsersPage viewWistListFirst() {
         userOne.click();
         return this;
     }

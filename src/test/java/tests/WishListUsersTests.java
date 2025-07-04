@@ -35,7 +35,7 @@ public class WishListUsersTests {
         wishListUsersPage
                 .openUsers()
                 .pageTitleShouldBeSame("Пользователи")
-                .viewWistListOne()
+                .viewWistListFirst()
                 .pageTitleListShouldBeSame("Списки желаний пользователя")
                 .backListUsers()
                 .viewWistListLast()
