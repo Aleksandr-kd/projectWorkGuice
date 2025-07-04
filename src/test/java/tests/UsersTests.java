@@ -29,7 +29,7 @@ public class UsersTests {
 
     @Test
     @Tag("test")
-    @DisplayName("Управление пользовательского подарка. Поиск и удаление подарка.")
+    @DisplayName("Управление пользовательского подарка. Проверка поиска и просмотра подарка.")
     public void userPresentView() {
         clientOtusPage
                 .open()
@@ -47,10 +47,9 @@ public class UsersTests {
                 .nameWishListShouldNotBeDisplayed(wishList);
     }
 
-
     @Test
     @Tag("test")
-    @DisplayName("Управление пользователем списка желаний.")
+    @DisplayName("Управление пользователем списка желаний. Проверка добавление желания и удаление.")
     public void userPresentWishList() {
         clientOtusPage
                 .open()
